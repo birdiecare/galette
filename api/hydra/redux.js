@@ -1,4 +1,8 @@
-import { reduceList as originalReduceList, reduceItems as originalReduceItems } from "../../collection/redux/reducers";
+import {
+  reduceList as originalReduceList,
+  reduceItems as originalReduceItems,
+  reduceListAndItems as originalReduceListAndItems,
+} from "../../collection/redux/reducers";
 
 const defaultHydraOptions = options => ({
   items: action => {
@@ -21,4 +25,11 @@ export function reduceItems(state, action, options) {
     ...defaultHydraOptions(options),
     ...options
   });
+}
+
+export function reduceListAndItems(state, action, options) {
+  return originalReduceListAndItems(state, action, {
+    ...defaultHydraOptions(options),
+    ...options
+  })
 }

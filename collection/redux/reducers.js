@@ -5,20 +5,24 @@ export const defaultList = {
   up_to_page: 0,
 };
 
-export const reduceListAndItems = (state = {}, action, { actionPrefix, listKeyInState, items, hasMore, itemIdentifierResolver }) => {
-  state = reduceItems(state, action, { items, itemIdentifierResolver });
-
-  return reduceList(state, action, {
-    actionPrefix,
-    listKeyInState,
-    items,
-    itemIdentifierResolver
-  });
+export const reduceListAndItems = (state = {}, action, options) => {
+  return reduceList(
+    reduceItems(
+      state,
+      action,
+      options
+    ),
+    action,
+    options
+  );
 };
 
-export const reduceItems = (state = {}, action, { items, itemIdentifierResolver }) => {
+export const reduceItems = (state = {}, action, { items, itemIdentifierResolver, itemTransformer }) => {
   if ('function' === typeof items) {
     items = items(action);
+  }
+  if (itemTransformer) {
+    items = items.map(itemTransformer);
   }
 
   for (let i = 0; i < items.length; i++) {
@@ -30,7 +34,7 @@ export const reduceItems = (state = {}, action, { items, itemIdentifierResolver 
   return state;
 };
 
-export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, items, totalItems, itemIdentifierResolver }) => {
+export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, items, totalItems, itemIdentifierResolver, itemTransformer }) => {
   // If the list does not exists.
   if (!state[listKeyInState]) {
     state = updateItem(state, listKeyInState, {
@@ -48,6 +52,9 @@ export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, i
   if (action.type === actionPrefix+'_RECEIVED') {
     if ('function' === typeof items) {
       items = items(action);
+    }
+    if (itemTransformer) {
+      items = items.map(itemTransformer);
     }
 
     if ('function' === typeof totalItems) {
