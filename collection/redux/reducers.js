@@ -9,7 +9,7 @@ export const reduceListAndItems = (state = {}, action, { actionPrefix, listKeyIn
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
 
-    state = updateItem(state, item[itemIdentifierResolver(item)], item);
+    state = updateItem(state, itemIdentifierResolver(item), item);
   }
 
   return reduceList(state, action, {
