@@ -6,11 +6,7 @@ export const defaultList = {
 };
 
 export const reduceListAndItems = (state = {}, action, { actionPrefix, listKeyInState, items, itemIdentifierResolver }) => {
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-
-    state = updateItem(state, itemIdentifierResolver(item), item);
-  }
+  state = reduceItems(state, action, { items, itemIdentifierResolver });
 
   return reduceList(state, action, {
     actionPrefix,
@@ -18,6 +14,16 @@ export const reduceListAndItems = (state = {}, action, { actionPrefix, listKeyIn
     items,
     itemIdentifierResolver
   });
+};
+
+export const reduceItems = (state = {}, action, { items, itemIdentifierResolver }) => {
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+
+    state = updateItem(state, itemIdentifierResolver(item), item);
+  }
+
+  return state;
 };
 
 export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, items, itemIdentifierResolver }) => {
