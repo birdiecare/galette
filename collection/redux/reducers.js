@@ -5,7 +5,7 @@ export const defaultList = {
   up_to_page: 0,
 };
 
-export const reduceListAndItems = (state = {}, action, { actionPrefix, listKeyInState, items, itemIdentifierResolver }) => {
+export const reduceListAndItems = (state = {}, action, { actionPrefix, listKeyInState, items, hasMore, itemIdentifierResolver }) => {
   state = reduceItems(state, action, { items, itemIdentifierResolver });
 
   return reduceList(state, action, {
@@ -26,7 +26,7 @@ export const reduceItems = (state = {}, action, { items, itemIdentifierResolver 
   return state;
 };
 
-export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, items, itemIdentifierResolver }) => {
+export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, items, totalItems, itemIdentifierResolver }) => {
   // If the list does not exists.
   if (!state[listKeyInState]) {
     state = updateItem(state, listKeyInState, {
@@ -54,6 +54,7 @@ export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, i
       identifiers,
       up_to_page: action.meta.page,
       loading: false,
+      total_items: totalItems,
     });
   }
 

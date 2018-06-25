@@ -43,4 +43,12 @@ export default class Collection
     getPage() {
         return this.list.up_to_page;
     }
+
+    hasMore() {
+        if (this.list.total_items === undefined) {
+            return true;
+        }
+
+        return this.list.total_items > this.items().length;
+    }
 }

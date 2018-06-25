@@ -37,7 +37,7 @@ export default class ScrollableCollection extends Component
                         titleColor="#fff" />
                 }
                 isLoading={collection.isLoading()}
-                canLoadMore={true}
+                canLoadMore={collection.hasMore()}
                 distanceToLoadMore={100}
                 onLoadMoreAsync={() => {
                     this.props.onRefresh(collection.getPage() + 1);
