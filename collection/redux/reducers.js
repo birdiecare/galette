@@ -17,6 +17,10 @@ export const reduceListAndItems = (state = {}, action, { actionPrefix, listKeyIn
 };
 
 export const reduceItems = (state = {}, action, { items, itemIdentifierResolver }) => {
+  if ('function' === typeof items) {
+    items = items(action);
+  }
+
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
 
@@ -42,6 +46,14 @@ export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, i
   }
 
   if (action.type === actionPrefix+'_RECEIVED') {
+    if ('function' === typeof items) {
+      items = items(action);
+    }
+
+    if ('function' === typeof totalItems) {
+      totalItems = totalItems(action);
+    }
+
     const loadedIdentifiers = items.map(itemIdentifierResolver);
     const identifiers = state[listKeyInState].up_to_page < action.meta.page
       // Adds

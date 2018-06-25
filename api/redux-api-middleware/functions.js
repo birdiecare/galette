@@ -40,3 +40,7 @@ export function createApiCallAction(actionName, call, meta = {}) {
     }
   }
 }
+
+export function payloadResolver(action) {
+  return action.payload || {};
+}
