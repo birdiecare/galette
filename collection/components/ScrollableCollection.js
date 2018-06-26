@@ -10,11 +10,13 @@ export default class ScrollableCollection extends Component
         ...Collection.propTypes,
 
         onRefresh: PropTypes.func.isRequired,
+        numberOfItemsForFullPage: PropTypes.number.isRequired,
 
         header: PropTypes.any,
     };
 
     static defaultProps = {
+        numberOfItemsForFullPage: 10,
         header: null,
     };
 
@@ -32,12 +34,13 @@ export default class ScrollableCollection extends Component
                     <RefreshControl
                         refreshing={collection.isLoading()}
                         onRefresh={() => this.props.onRefresh(1)}
-                        title="Pull to refresh"
+                        title="Loading..."
                         tintColor="#fff"
                         titleColor="#fff" />
                 }
                 isLoading={collection.isLoading()}
                 canLoadMore={collection.hasMore()}
+                displayLoading={this._shouldDisplayBottomLoading(collection)}
                 distanceToLoadMore={100}
                 onLoadMoreAsync={() => {
                     this.props.onRefresh(collection.getPage() + 1);
@@ -48,5 +51,9 @@ export default class ScrollableCollection extends Component
                 <Collection {...this.props} />
             </InfiniteScrollView>
         )
+    }
+
+    _shouldDisplayBottomLoading(collection) {
+        return collection.getPage() > 1 || collection.items().length > this.props.numberOfItemsForFullPage;
     }
 }

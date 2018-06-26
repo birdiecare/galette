@@ -26,7 +26,7 @@ export default class Collection extends Component
                 )}
 
                 {collection.hasError() && (
-                    <Text>Something went wrong...</Text>
+                    <Text>Something went wrong, sorry for the inconvenience.</Text>
                 )}
 
                 <List>

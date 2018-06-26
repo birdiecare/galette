@@ -23,6 +23,7 @@ export default class InfiniteScrollView extends React.Component {
     onLoadMoreAsync: PropTypes.func.isRequired,
     onLoadError: PropTypes.func,
     isLoading: PropTypes.bool,
+    displayLoading: PropTypes.bool.isRequired,
     renderLoadingIndicator: PropTypes.func.isRequired,
     renderLoadingErrorIndicator: PropTypes.func.isRequired,
   };
@@ -32,6 +33,7 @@ export default class InfiniteScrollView extends React.Component {
     canLoadMore: false,
     isLoading: false,
     scrollEventThrottle: 100,
+    displayLoading: true,
     renderLoadingIndicator: () => <DefaultLoadingIndicator/>,
     renderLoadingErrorIndicator: () => <View/>,
     renderScrollComponent: props => <ScrollView {...props} />,
@@ -66,7 +68,7 @@ export default class InfiniteScrollView extends React.Component {
         ),
         {key: 'loading-error-indicator'},
       );
-    } else if (this._isLoading()) {
+    } else if (this._isLoading() && this.props.displayLoading) {
       statusIndicator = React.cloneElement(
         this.props.renderLoadingIndicator(),
         {key: 'loading-indicator'},

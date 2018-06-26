@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it displays only one loading indicator on the first page 1`] = `
+<RCTScrollView
+  canLoadMore={true}
+  displayLoading={false}
+  distanceToLoadMore={100}
+  isLoading={true}
+  onLoadMoreAsync={[Function]}
+  onScroll={[Function]}
+  refreshControl={
+    <RefreshControlMock
+      onRefresh={[Function]}
+      refreshing={true}
+      tintColor="#fff"
+      title="Loading..."
+      titleColor="#fff"
+    />
+  }
+  renderLoadingErrorIndicator={[Function]}
+  renderLoadingIndicator={[Function]}
+  scrollEventThrottle={100}
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RCTRefreshControl />
+  <View>
+    <View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#ffffff",
+              "borderColor": "#bbb",
+              "borderTopWidth": 1,
+              "marginTop": 20,
+            },
+            undefined,
+          ]
+        }
+      >
+        <RCTScrollView
+          dataSource={
+            ListViewDataSource {
+              "items": 1,
+            }
+          }
+          renderRow={[Function]}
+          renderScrollComponent={[Function]}
+        >
+          <View>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+            >
+              Row
+            </Text>
+          </View>
+        </RCTScrollView>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
+exports[`it displays the bottom loading indicator when more than one page has been loaded 1`] = `
+<RCTScrollView
+  canLoadMore={true}
+  displayLoading={true}
+  distanceToLoadMore={100}
+  isLoading={true}
+  onLoadMoreAsync={[Function]}
+  onScroll={[Function]}
+  refreshControl={
+    <RefreshControlMock
+      onRefresh={[Function]}
+      refreshing={true}
+      tintColor="#fff"
+      title="Loading..."
+      titleColor="#fff"
+    />
+  }
+  renderLoadingErrorIndicator={[Function]}
+  renderLoadingIndicator={[Function]}
+  scrollEventThrottle={100}
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RCTRefreshControl />
+  <View>
+    <View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#ffffff",
+              "borderColor": "#bbb",
+              "borderTopWidth": 1,
+              "marginTop": 20,
+            },
+            undefined,
+          ]
+        }
+      >
+        <RCTScrollView
+          dataSource={
+            ListViewDataSource {
+              "items": 2,
+            }
+          }
+          renderRow={[Function]}
+          renderScrollComponent={[Function]}
+        >
+          <View>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+            >
+              Row
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+            >
+              Row
+            </Text>
+          </View>
+        </RCTScrollView>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "flex": 1,
+          "justifyContent": "center",
+          "padding": 20,
+        }
+      }
+    >
+      <ActivityIndicator
+        animating={true}
+        color="#999999"
+        hidesWhenStopped={true}
+        size="small"
+      />
+    </View>
+  </View>
+</RCTScrollView>
+`;
