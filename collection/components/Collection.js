@@ -38,6 +38,7 @@ export default class Collection extends Component
 
                     <ListView
                         dataSource={dataSource}
+                        enableEmptySections={true}
                         renderRow={(item, id) => {
                             return renderRow(item, id)
                         }} />
