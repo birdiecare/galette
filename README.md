@@ -7,10 +7,17 @@
 Galette is a set of tools, components and screens to be re-used within your applications. Built on the shoulders of 
 React & Redux, these modules will get you up and running very fast.
 
-## Modules
+## Core
 
-These modules are generic modules to be used both for React and React Native. Checkout bellow for React and React Native
-specific components that work well with these modules.
+The core contains modules that are generic. They can be used both for React and React Native.
+
+### Installation
+
+```
+yarn add @galette/core
+```
+
+### Modules
 
 - [**Store**](./modules/store)<br>
   Reducers, selectors and helpers to store your collections and items in your Redux store.
@@ -23,10 +30,26 @@ specific components that work well with these modules.
 
 ## React Web
 
+### Installation
+
+```
+yarn add @galette/web
+```
+
+### Modules
+
 - [**TokenWall**](./web/token-wall)<br>
   Adding a simple token wall for your early prototype.
 
 ## React Native
+
+### Installation
+
+```
+yarn add @galette/native
+```
+
+### Modules
 
 - [**InfiniteScrollView**](./native/infinite-scroll-view)<br>
   An easy to use infinite scroll view for your paginated collections.

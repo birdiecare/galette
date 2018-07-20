@@ -1,5 +1,6 @@
 {
-  "name": "@galette/galette",
+  "name": "@galette/web",
+  "version": "0.0.1",
   "require": {
     "react-native-elements": "^0.18.4"
   }
