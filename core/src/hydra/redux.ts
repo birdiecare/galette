@@ -2,7 +2,7 @@ import {
   reduceList as originalReduceList,
   reduceItems as originalReduceItems,
   reduceListAndItems as originalReduceListAndItems,
-} from "../../collection/redux/reducers";
+} from "../store/redux/reducers";
 
 const defaultHydraOptions = options => ({
   items: action => {

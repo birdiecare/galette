@@ -1,5 +1,4 @@
-import { ListView } from "react-native";
-import Collection from './Collection';
+import Collection from '../store/Collection';
 
 export default class HydraCollection extends Collection
 {
