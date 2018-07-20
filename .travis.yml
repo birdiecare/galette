@@ -1,0 +1,15 @@
+os: linux
+dist: trusty
+sudo: false
+language: node
+
+cache:
+  - yarn
+
+jobs:
+  include:
+    # Core
+    - script:
+        - cd core/
+        - yarn install
+        - yarn run test
