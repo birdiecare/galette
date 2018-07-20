@@ -1,12 +1,24 @@
-import { defaultList } from "./reducers";
+import {ReducedList} from "./reducers";
 
-export const collectionWithItems = (state, listKeyInState, options = {}) => {
-  let list = {
+const defaultList : ReducedList = {
+  identifiers: [],
+};
+
+export type ReducedListWithItems = ReducedList & {
+  items: any[];
+}
+
+export type SelectorOptions = {
+  itemResolver?: (identifier: string) => any;
+}
+
+export const collectionWithItems = (state : any, listKeyInState : string, options : SelectorOptions = {}) : ReducedListWithItems => {
+  let list : ReducedListWithItems = {
     ...defaultList,
     ...state[listKeyInState]
   };
 
-  list.items = list.identifiers.map(identifier => {
+  list.items = list.identifiers.map((identifier : string) => {
     const item = options.itemResolver ? options.itemResolver(identifier) : state[identifier];
 
     if (!item) {
@@ -16,7 +28,7 @@ export const collectionWithItems = (state, listKeyInState, options = {}) => {
     }
 
     return item;
-  }).filter(item => item !== undefined);
+  }).filter((item : any) => item !== undefined);
 
   return list;
 };

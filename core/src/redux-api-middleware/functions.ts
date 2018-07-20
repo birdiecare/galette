@@ -1,7 +1,13 @@
 import { CALL_API } from "redux-api-middleware"
+import {Action} from "../store/redux/reducers";
 
-export function createReducer(initialState, handlers) {
-  return function reducer(state = initialState, action) {
+export type ReducerHandler = (state : object, action: Action) => any;
+export type ReducerHandlers = {
+  [actionName: string]: ReducerHandler;
+}
+
+export function createReducer(initialState : object, handlers : ReducerHandlers) {
+  return function reducer(state = initialState, action : Action) {
     if (handlers.hasOwnProperty(action.type)) {
       return handlers[action.type](state, action)
     } else {
@@ -10,7 +16,7 @@ export function createReducer(initialState, handlers) {
   }
 }
 
-export function createApiCallReducer (actionName) {
+export function createApiCallReducer(actionName: string) {
   return createReducer({
     result: null,
     error: null,
@@ -28,7 +34,7 @@ export function createApiCallReducer (actionName) {
   })
 }
 
-export function createApiCallAction(actionName, call, meta = {}) {
+export function createApiCallAction(actionName : string, call : object, meta : object = {}) {
   return {
     [CALL_API]: {
       ...call,
@@ -41,6 +47,6 @@ export function createApiCallAction(actionName, call, meta = {}) {
   }
 }
 
-export function payloadResolver(action) {
+export function payloadResolver(action : any) {
   return action.payload || {};
 }

@@ -1,8 +1,20 @@
-import Collection from '../store/Collection';
+import Collection, {CollectionStructure} from '../store/Collection';
 
-export default class HydraCollection extends Collection
+export type HydraResponse = {
+  "hydra:member"?: any[];
+}
+
+export function collectionStructureFromHydraResponse(hydraResponse: HydraResponse) : CollectionStructure
 {
-    constructor(response) {
-        super(response, 'hydra:member');
-    }
+  const items = hydraResponse['hydra:member'] || [];
+
+  return {
+    items,
+  };
+}
+
+export default class HydraCollection extends Collection {
+  constructor(response: object) {
+    super(collectionStructureFromHydraResponse(response));
+  }
 }

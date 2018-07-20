@@ -1,11 +1,35 @@
 import { updateItem } from "./functions";
 
-export const defaultList = {
-  identifiers: [],
-  up_to_page: 0,
+export type Action = {
+  type: string;
+
+  [x: string]: any;
+}
+export type ItemsResolver = (action: Action) => any[];
+export type ItemsOption = any[] | ItemsResolver;
+export type ReduceItemsOptions = {
+  items: ItemsOption;
+  itemIdentifierResolver: (item: object) => string;
+  itemTransformer?: (item : object) => object;
 };
 
-export const reduceListAndItems = (state = {}, action, options) => {
+export type ReduceListOptions = ReduceItemsOptions & {
+  actionPrefix: string;
+  listKeyInState: string;
+
+  totalItems?: (action: Action) => number;
+};
+
+export type ReducedList = {
+  identifiers: string[];
+
+  up_to_page?: number;
+  loading?: number;
+  error?: any;
+  total_items?: number;
+};
+
+export const reduceListAndItems = (state = {}, action : Action, options : ReduceListOptions) => {
   return reduceList(
     reduceItems(
       state,
@@ -17,68 +41,67 @@ export const reduceListAndItems = (state = {}, action, options) => {
   );
 };
 
-export const reduceItems = (state = {}, action, { items, itemIdentifierResolver, itemTransformer }) => {
-  if ('function' === typeof items) {
-    items = items(action);
+function itemsFromAction(action: Action, options: ReduceItemsOptions) {
+  let items = 'function' === typeof options.items
+    ? options.items(action)
+    : options.items;
+
+  if (options.itemTransformer) {
+    items = items.map(options.itemTransformer);
   }
-  if (itemTransformer) {
-    items = items.map(itemTransformer);
-  }
+
+  return items;
+}
+
+export const reduceItems = (state = {}, action : Action, options : ReduceItemsOptions) => {
+  let items = itemsFromAction(action, options);
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
 
-    state = updateItem(state, itemIdentifierResolver(item), item);
+    state = updateItem(state, options.itemIdentifierResolver(item), item);
   }
 
   return state;
 };
 
-export const reduceList = (state = {}, action, { actionPrefix, listKeyInState, items, totalItems, itemIdentifierResolver, itemTransformer }) => {
+export const reduceList = (state : any = {}, action : Action, options : ReduceListOptions) : ReducedList => {
   // If the list does not exists.
-  if (!state[listKeyInState]) {
-    state = updateItem(state, listKeyInState, {
-      ...defaultList
-    });
+  if (!state[options.listKeyInState]) {
+    state = updateItem(state, options.listKeyInState, {});
   }
 
-  if (action.type === actionPrefix+'_SENT') {
-    return updateItem(state, listKeyInState, {
+  if (action.type === options.actionPrefix+'_SENT') {
+    return updateItem(state, options.listKeyInState, {
       loading: true,
       error: null,
     });
   }
 
-  if (action.type === actionPrefix+'_RECEIVED') {
-    if ('function' === typeof items) {
-      items = items(action);
-    }
-    if (itemTransformer) {
-      items = items.map(itemTransformer);
-    }
+  if (action.type === options.actionPrefix+'_RECEIVED') {
+    const items = itemsFromAction(action, options);
+    const totalItems = 'function' === typeof options.totalItems
+      ? options.totalItems(action)
+      : undefined;
 
-    if ('function' === typeof totalItems) {
-      totalItems = totalItems(action);
-    }
-
-    const loadedIdentifiers = items.map(itemIdentifierResolver);
-    const identifiers = state[listKeyInState].up_to_page < action.meta.page
+    const loadedIdentifiers = items.map(options.itemIdentifierResolver);
+    const identifiers = action.meta && state[options.listKeyInState].up_to_page < action.meta.page
       // Adds
-      ? state[listKeyInState].identifiers.concat(loadedIdentifiers)
+      ? state[options.listKeyInState].identifiers.concat(loadedIdentifiers)
 
       // Replaces
       : loadedIdentifiers;
 
-    return updateItem(state, listKeyInState, {
+    return updateItem(state, options.listKeyInState, {
       identifiers,
-      up_to_page: action.meta.page,
+      up_to_page: action.meta && action.meta.page,
       loading: false,
       total_items: totalItems,
     });
   }
 
-  if (action.type === actionPrefix+'_FAILED') {
-    return updateItem(state, listKeyInState, {
+  if (action.type === options.actionPrefix+'_FAILED') {
+    return updateItem(state, options.listKeyInState, {
       loading: false,
       error: action.payload,
     });

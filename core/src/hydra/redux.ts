@@ -2,34 +2,41 @@ import {
   reduceList as originalReduceList,
   reduceItems as originalReduceItems,
   reduceListAndItems as originalReduceListAndItems,
+  Action,
+  ReduceListOptions,
 } from "../store/redux/reducers";
 
-const defaultHydraOptions = options => ({
-  items: action => {
-    return options.payloadResolver(action)['hydra:member'] || [];
-  },
-  totalItems: action => {
-    return options.payloadResolver(action)['hydra:totalItems'];
+export type HydraOptions = {
+  actionPrefix: string;
+  listKeyInState: string;
+  payloadResolver: (action : Action) => any;
+}
+
+const addDefaultHydraOptions = (options : HydraOptions) : ReduceListOptions => {
+  const {payloadResolver, ...rest} = options;
+
+  return {
+    ...rest,
+    itemIdentifierResolver: (item: any) => {
+      return item['@id'];
+    },
+    items: (action: Action) => {
+      return payloadResolver(action)['hydra:member'] || [];
+    },
+    totalItems: (action: Action) => {
+      return payloadResolver(action)['hydra:totalItems'];
+    }
   }
-});
+};
 
-export function reduceList(state, action, options) {
-  return originalReduceList(state, action, {
-    ...defaultHydraOptions(options),
-    ...options
-  });
+export function reduceList(state : object, action : Action, options : HydraOptions) {
+  return originalReduceList(state, action, addDefaultHydraOptions(options));
 }
 
-export function reduceItems(state, action, options) {
-  return originalReduceItems(state, action, {
-    ...defaultHydraOptions(options),
-    ...options
-  });
+export function reduceItems(state : object, action : Action, options : HydraOptions) {
+  return originalReduceItems(state, action, addDefaultHydraOptions(options));
 }
 
-export function reduceListAndItems(state, action, options) {
-  return originalReduceListAndItems(state, action, {
-    ...defaultHydraOptions(options),
-    ...options
-  })
+export function reduceListAndItems(state : object, action : Action, options : HydraOptions) {
+  return originalReduceListAndItems(state, action, addDefaultHydraOptions(options))
 }
