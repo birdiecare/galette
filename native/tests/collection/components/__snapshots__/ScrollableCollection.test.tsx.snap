@@ -48,6 +48,7 @@ exports[`it displays only one loading indicator on the first page 1`] = `
               "items": 1,
             }
           }
+          enableEmptySections={true}
           renderRow={[Function]}
           renderScrollComponent={[Function]}
         >
@@ -115,6 +116,7 @@ exports[`it displays the bottom loading indicator when more than one page has be
               "items": 2,
             }
           }
+          enableEmptySections={true}
           renderRow={[Function]}
           renderScrollComponent={[Function]}
         >

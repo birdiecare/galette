@@ -13,3 +13,9 @@ jobs:
         - cd core/
         - yarn install
         - yarn run test
+
+    # Native
+    - script:
+        - cd native/
+        - yarn install
+        - yarn run test

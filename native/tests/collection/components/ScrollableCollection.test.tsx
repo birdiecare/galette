@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import ScrollableCollection from '../../components/ScrollableCollection'
 import {Text} from "react-native";
-import Collection from "../../Collection";
+import ScrollableCollection from "../../../src/collection/components/ScrollableCollection";
+import Collection from "../../../src/collection/Collection";
 
 test('it displays only one loading indicator on the first page', () => {
   const collection = new Collection({
