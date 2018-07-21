@@ -1,33 +1,29 @@
-'use strict';
-
-import PropTypes from 'prop-types';
-import React from 'react';
-import {
-  ScrollView,
-  View,
-} from 'react-native';
+import React, { Component } from 'react';
+import {ScrollView, ScrollViewProperties, View} from 'react-native';
 import ScrollableMixin from 'react-native-scrollable-mixin';
-
 import cloneReferencedElement from 'react-clone-referenced-element';
-
 import DefaultLoadingIndicator from './DefaultLoadingIndicator';
 
-export default class InfiniteScrollView extends React.Component {
-  static propTypes = {
-    ...ScrollView.propTypes,
-    distanceToLoadMore: PropTypes.number.isRequired,
-    canLoadMore: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.bool,
-    ]).isRequired,
-    onLoadMoreAsync: PropTypes.func.isRequired,
-    onLoadError: PropTypes.func,
-    isLoading: PropTypes.bool,
-    displayLoading: PropTypes.bool.isRequired,
-    renderLoadingIndicator: PropTypes.func.isRequired,
-    renderLoadingErrorIndicator: PropTypes.func.isRequired,
-  };
+type Props = ScrollViewProperties & {
+  onLoadMoreAsync: () => void | Promise<void>;
 
+  displayLoading?: boolean;
+  renderLoadingErrorIndicator?: (options: any) => any;
+  renderLoadingIndicator?: () => any;
+  renderScrollComponent?: (props : any) => any;
+  onScroll?: (event : any) => void;
+  canLoadMore?: boolean | (() => boolean);
+  distanceToLoadMore?: number;
+  onLoadError?: (e : Error) => void;
+  isLoading?: boolean;
+};
+
+type State = {
+  isDisplayingError: boolean;
+  isLoading?: boolean;
+};
+
+export default class InfiniteScrollView extends Component<Props, State> {
   static defaultProps = {
     distanceToLoadMore: 1500,
     canLoadMore: false,
@@ -38,6 +34,8 @@ export default class InfiniteScrollView extends React.Component {
     renderLoadingErrorIndicator: () => <View/>,
     renderScrollComponent: props => <ScrollView {...props} />,
   };
+
+  private _scrollComponent;
 
   constructor(props, context) {
     super(props, context);
@@ -75,10 +73,7 @@ export default class InfiniteScrollView extends React.Component {
       );
     }
 
-    let {
-      renderScrollComponent,
-      ...props,
-    } = this.props;
+    let { renderScrollComponent, ...props } = this.props;
 
     Object.assign(props, {
       onScroll: this._handleScroll,

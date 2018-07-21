@@ -1,20 +1,18 @@
 import React, { Component } from 'react'
 import {RefreshControl, ScrollView} from "react-native";
-import Collection from "./Collection";
+import CollectionComponent, { Props as CollectionComponentProps } from "./CollectionComponent";
 import InfiniteScrollView from "../../infinite-scroll-view/InfiniteScrollView";
-import PropTypes from "prop-types";
+import Collection from "../Collection";
 
-export default class ScrollableCollection extends Component
+type Props = CollectionComponentProps & {
+    collection: Collection;
+    onRefresh: (page?: number) => void;
+    header?: Component;
+    numberOfItemsForFullPage?: number;
+}
+
+export default class ScrollableCollection extends Component<Props, {}>
 {
-    static propTypes = {
-        ...Collection.propTypes,
-
-        onRefresh: PropTypes.func.isRequired,
-        numberOfItemsForFullPage: PropTypes.number.isRequired,
-
-        header: PropTypes.any,
-    };
-
     static defaultProps = {
         numberOfItemsForFullPage: 10,
         header: null,
@@ -48,7 +46,7 @@ export default class ScrollableCollection extends Component
 
                 {this.props.header}
 
-                <Collection {...this.props} />
+                <CollectionComponent {...this.props} />
             </InfiniteScrollView>
         )
     }
