@@ -13,8 +13,18 @@ export type ReduceItemsOptions = {
   itemTransformer?: (item : object) => object;
 };
 
-export type ReduceListOptions = ReduceItemsOptions & {
-  actionPrefix: string;
+export type ActionLifecycle = {
+  starting: string;
+  failed: string;
+  succeed: string;
+}
+
+export type ActionLifecycleOptions = {
+  actionPrefix?: string;
+  actions: ActionLifecycle;
+}
+
+export type ReduceListOptions = ReduceItemsOptions & ActionLifecycleOptions & {
   listKeyInState: string;
 
   totalItems?: (action: Action) => number;
@@ -66,19 +76,27 @@ export const reduceItems = (state = {}, action : Action, options : ReduceItemsOp
 };
 
 export const reduceList = (state : any = {}, action : Action, options : ReduceListOptions) : ReducedList => {
+  if (options.actionPrefix) {
+    options.actions = {
+      starting: options.actionPrefix+'_SENT',
+      failed: options.actionPrefix+'_FAILED',
+      succeed: options.actionPrefix+'_RECEIVED',
+    }
+  }
+
   // If the list does not exists.
   if (!state[options.listKeyInState]) {
     state = updateItem(state, options.listKeyInState, {});
   }
 
-  if (action.type === options.actionPrefix+'_SENT') {
+  if (action.type === options.actions.starting) {
     return updateItem(state, options.listKeyInState, {
       loading: true,
       error: null,
     });
   }
 
-  if (action.type === options.actionPrefix+'_RECEIVED') {
+  if (action.type === options.actions.succeed) {
     const items = itemsFromAction(action, options);
     const totalItems = 'function' === typeof options.totalItems
       ? options.totalItems(action)
@@ -100,10 +118,10 @@ export const reduceList = (state : any = {}, action : Action, options : ReduceLi
     });
   }
 
-  if (action.type === options.actionPrefix+'_FAILED') {
+  if (action.type === options.actions.failed) {
     return updateItem(state, options.listKeyInState, {
       loading: false,
-      error: action.payload,
+      error: action.error || action.payload,
     });
   }
 

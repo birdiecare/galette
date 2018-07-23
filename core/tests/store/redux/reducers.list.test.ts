@@ -70,4 +70,28 @@ describe('Reduce list of items', () => {
       }
     })
   })
+
+  it('supports to specify each action', () => {
+    let state = {};
+    const reducerOptions = {
+      items: [],
+      itemIdentifierResolver: (item : any) => item.id,
+      actions: {
+        starting: 'MY_ACTION_STARTING',
+        failed: 'IT_DID_FAIL',
+        succeed: 'YAY'
+      },
+      listKeyInState: 'list'
+    };
+
+    state = reduceList(state, { type: 'MY_ACTION_FAILED' }, reducerOptions);
+    state = reduceList(state, { type: 'IT_DID_FAIL', error: { oups: 'Meh'} }, reducerOptions);
+
+    expect(state).toEqual({
+      list: {
+        loading: false,
+        error: { oups: 'Meh' }
+      }
+    })
+  })
 })
