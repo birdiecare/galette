@@ -123,7 +123,7 @@ export default connect((state, props) => ({
         return state.travels[identifier];
     }
   }),
-}))(UserList);
+}))(UserTravelList);
 ```
 
 ### Custom action names
