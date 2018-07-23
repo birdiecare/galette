@@ -3,11 +3,10 @@ import {
   reduceItems as originalReduceItems,
   reduceListAndItems as originalReduceListAndItems,
   Action,
-  ReduceListOptions,
+  ReduceListOptions, ActionLifecycleOptions,
 } from "../store/redux/reducers";
 
-export type HydraOptions = {
-  actionPrefix: string;
+export type HydraOptions = ActionLifecycleOptions & {
   listKeyInState: string;
   payloadResolver: (action : Action) => any;
 }
