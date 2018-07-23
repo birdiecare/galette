@@ -48,5 +48,8 @@
       "<rootDir>/lib/"
     ],
     "cacheDirectory": ".jest/cache"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
