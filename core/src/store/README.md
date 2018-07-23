@@ -12,6 +12,8 @@ In order to make the documentation easy to reason about, we will describe here t
 while dealing with lists and items:
 
 1. [Simple list of items](#simple-list-of-items)
+1. [List of items belonging to another one](#list-of-items-belonging-to-another-one)
+1. [Custom action names](#custom-action-names)
 
 ### Simple list of items
 
@@ -36,7 +38,7 @@ export default const reducer = (state, action) => {
     // A function responsible of extracting the identifier for each item
     itemIdentifierResolver: item => item.id,
 
-    // How to get the payload from a "sucess" action
+    // How to get the payload from a "success" action
     payloadResolver: action => action.payload
   });
 }
@@ -62,13 +64,75 @@ export default connect(state => ({
 }))(UserList);
 ```
 
+### List of items belonging to another one
+
+Let's imagine that on top of our users (explained in the previous example), each
+of them gave a list of travels. We want to reduce the travel items in their own
+`travels` reducer so we don't have duplicates but we want to store the list on
+the user item.
+
+```javascript
+// reducers.js
+
+import { store } from "@galette/core";
+const { reducers: { reduceList, reduceItems }, functions: { updateItem }} = store;
+
+const travelIdentifierResolver = item => item.uuid;
+const payloadResolver = action => action.payload;
+
+export const users = (state, action) => {
+  if (action.type.indexOf(LOAD_USER_TRAVELS) === 0) {
+    const { username } = action;
+
+    return updateItem(state, username, reduceList(state[username], action, {
+      listKeyInState: 'travels',
+      actionPrefix: LOAD_USER_TRAVELS,
+      itemIdentifierResolver: travelIdentifierResolver,
+      payloadResolver,
+    }));
+  }
+}
+
+export const travels = (state, action) => {
+  if (action.type.indexOf(LOAD_USER_TRAVELS) === 0) {
+    return reduceItems(state, action, {
+      itemIdentifierResolver: travelIdentifierResolver,
+      payloadResolver
+    })
+  }
+}
+```
+
+You can now use the selector to get the travels of a given user in your component:
+```javascript
+// component.js
+
+import { store } from "@galette/core";
+const { selectors: { collectionWithItems }} = store;
+
+class UserTravelList extends Component
+{
+  render() {
+    console.log('travels of user "'+this.props.user.username+'": ', this.props.travels);
+  }
+}
+
+export default connect((state, props) => ({
+  travels: collectionWithItems(props.user, 'travels', {
+    itemResolver: identifier => {
+        return state.travels[identifier];
+    }
+  }),
+}))(UserList);
+```
+
 ### Custom action names
 
 If you don't use actions ending with `_SENT`, `_SUCCESS` or `_FAILED`, you need to specify which actions should be
 considered by the reducer.
 
 Here is an example with the `reduceListAndItems` method (though it works for all of them):
-```
+```javascript
 reduceListAndItems(state, action, {
   // other options...
   actions: {
@@ -125,3 +189,17 @@ The store will look like this:
   - `5678`
     - `username`
     - `email`
+
+### Example: Users with a list of travels
+
+- `users`
+  - `1234` (_user identifier_)
+    - `travels`
+      - `identifiers`. List of the travel identifiers. Example: `["1234"]`
+      - `loading`. Boolean
+      - `error`. An error if any.
+
+- `travels`
+  - `1234` (_travel identifier_)
+    - `name`
+    - _other travel properties..._
