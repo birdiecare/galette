@@ -3,7 +3,7 @@
 Using an extensible and well-organised store structure is one of the most important things when using Redux. If you are
 not sure or want to know more about this, you should read [this article](https://hackernoon.com/shape-your-redux-store-like-your-database-98faa4754fd5).
 
-We have built a set of functions that allow you to storing items and lists in an organised manner with almost effort.
+We have built a set of functions that allow you to store items and lists in an organised manner with almost no effort.
 Have a look to [how it will store your data](#how-is-it-stored) at the bottom of the file.
 
 ## Usage
