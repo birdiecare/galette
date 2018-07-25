@@ -51,6 +51,9 @@ yarn add @galette/native
 
 ### Modules
 
+- [**Loaded entity**](./native/src/loaded-entity)<br>
+  Ensure that an entity is loaded before loading the component.
+
 - [**InfiniteScrollView**](./native/src/infinite-scroll-view)<br>
   An easy to use infinite scroll view for your paginated collections.
 
