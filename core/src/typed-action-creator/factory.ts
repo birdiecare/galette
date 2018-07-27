@@ -1,7 +1,11 @@
+type ActionCreator = (...args : any[]) => any;
+type ActionCreatorWithType = ActionCreator & {
+  type: string;
+}
 
-export default function typedActionCreatorFactory(type: string, resolver: () => any)
+export default function typedActionCreatorFactory(type: string, resolver: () => any) : ActionCreatorWithType
 {
-  const creator = (...args) => {
+  const creator : ActionCreator = (...args : any[]) => {
     const properties = resolver.apply(null, args);
 
     return {
@@ -10,7 +14,7 @@ export default function typedActionCreatorFactory(type: string, resolver: () => 
     }
   }
 
-  creator.type = type;
-
-  return creator;
+  return Object.assign(creator, {
+    type
+  });
 }
