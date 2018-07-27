@@ -13,6 +13,7 @@ jobs:
         - cd core/
         - yarn install
         - yarn run test
+        - yarn run build
 
     # Native
     - script:
