@@ -179,6 +179,9 @@ The `ErrorWrapper` component accepts the following **optionnal** properties:
   Some styling for the error wrapper container. Typically, you might want to have
   `style={{flex: 1}}` to ensure the wrapper takes the entirety of your screen.
 
-- `renderError` _function `(error, onPress) => React.Component`_<br>
+- `renderError` _function `(error) => React.Component`_<br>
   Renders an individual error. By default, it uses our built-in [`ErrorMessage` component](./src/errors/components/ErrorMessage.tsx). You can use your own component
   to have a custom user interface.
+
+- `retryEnabled` _boolean_<br> (default to `true`)<br>
+  Enables the retry button when possible.

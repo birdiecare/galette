@@ -9,10 +9,7 @@ export type ReportedError = {
 
   // The error
   message: string;
-
-  // The original action that triggered this error
-  options?: ReportActionOptions;
-}
+} & ReportActionOptions;
 
 export type ReportActionOptions = {
   triggerAction?: Action;

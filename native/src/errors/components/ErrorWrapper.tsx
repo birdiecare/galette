@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { ReportedError } from "../types";
-import { dismissError, reportError } from "../actions";
+import { reportError } from "../actions";
 import ErrorMessage from "./ErrorMessage";
 import { reportedErrors } from "../store";
 
@@ -14,10 +14,10 @@ type Props = {
   style?: any;
   channel?: string;
   floating?: boolean;
+  retryEnabled?: boolean;
 
-  dismissError: (identifier: string) => void;
   reportError: (error: Error) => void;
-  renderError?: (error: Error, onPress: () => void) => any;
+  renderError?: (error: Error) => React.ComponentType;
 }
 
 class ErrorWrapper extends Component<Props, {}>
@@ -56,16 +56,14 @@ class ErrorWrapper extends Component<Props, {}>
   }
 
   renderError(error) {
-    const onPress = () => {
-      this.props.dismissError(error.identifier);
-    };
-
     if (this.props.renderError) {
-      return this.props.renderError(error, onPress);
+      return this.props.renderError(error);
     }
 
     return (
-      <ErrorMessage reportedError={error} onPress={onPress} />
+      <ErrorMessage
+        reportedError={error}
+        retryEnabled={this.props.retryEnabled} />
     )
   }
 }
@@ -87,6 +85,5 @@ export default connect((state, props) => {
     errors: reportedErrors(state, props.channel),
   }
 }, dispatch => bindActionCreators({
-  dismissError,
   reportError,
 }, dispatch))(ErrorWrapper);
