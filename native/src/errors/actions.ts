@@ -1,8 +1,5 @@
 import { typedActionCreatorFactory } from '@galette/core';
-
-type Action = any & {
-  type: string;
-}
+import { Action } from "./types";
 
 export const reportError = typedActionCreatorFactory('@Galette/REPORT_ERROR', (error: Error, action?: Action) => ({
   error,

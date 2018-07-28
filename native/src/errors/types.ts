@@ -17,3 +17,8 @@ export type ReportedError = {
 export type ErrorModuleState = {
   reportedErrors: ReportedError[];
 }
+
+// Redux
+export type Action = any & {
+  type: string;
+}

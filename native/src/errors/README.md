@@ -67,7 +67,16 @@ const reducer = (state, action) => {
 
 ### redux-saga
 
-Configure the `onLoad` option of your Saga middleware.
+Integrating `redux-saga` can be done in two (complementary) ways:
+
+1. [Configure the `onLoad` option](#1-onload-method) of your Saga middleware to catch all saga errors
+   at once.
+2. [Decorate your sagas](#2-saga-decorator-method) for more flexibility and features.
+
+#### 1. `onLoad` method
+
+The `createSagaMiddleware` can take an `onError` callback. Galette ships with one
+that will report the error for you.
 
 ```javascript
 import createSagaMiddleware from 'redux-saga'
@@ -84,4 +93,25 @@ const store = /* ... */;
 
 // Set the `store` on the saga handler
 sagaErrorHandler.setStore(store);
+```
+
+This method applies to all the sagas at a time, which gives an very easy first step.
+Though, it does not allow to collect the action that failed and therefore you will
+not benefit from things like retries. To do so, you will need to decorate your sagas
+as described in the next section.
+
+#### 2. Saga decorator method
+
+The basic usage is simply to wrap your generators with the `handleSagaErrors` method:
+
+```javascript
+// sagas.js
+import { errors } from '@galette/native'
+const { handleSagaErrors } = errors;
+
+const mySaga = handleSagaErrors(function*() {
+  // Your own saga code...
+  // yield ...;
+  // ...
+});
 ```

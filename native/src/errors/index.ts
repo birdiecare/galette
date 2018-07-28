@@ -4,6 +4,7 @@ import middleware from "./middleware";
 import reducer from "./reducer";
 import * as actions from "./actions";
 import sagaErrorHandler from "./saga/error-handler";
+import handleSagaErrors from "./saga/decorator";
 
 const components = {
   ErrorWrapper,
@@ -16,4 +17,5 @@ export {
   reducer,
   actions,
   sagaErrorHandler,
+  handleSagaErrors,
 };
