@@ -1,6 +1,5 @@
 import { reportError, dismissError } from "./actions";
 import { Error, ReportedError, ErrorModuleState } from "./types";
-import { reportedErrors } from "./selectors";
 
 const defaultState : ErrorModuleState = {
   reportedErrors: [],
@@ -8,22 +7,32 @@ const defaultState : ErrorModuleState = {
 
 const randomIdentifier = () => Math.random().toString(36).substring(2, 15)
 
-const reducer = (state : ErrorModuleState = defaultState, action) => {
+export const reportedErrors = (state: ErrorModuleState & any = defaultState, channel?: string) => {
+  const errors = state.reportedErrors || [];
+
+  if (channel === null) {
+    return errors;
+  }
+
+  return errors.filter(error => error.channel === channel);
+}
+
+export const reducer = (state : ErrorModuleState = defaultState, action) => {
   if (action.type === reportError.type) {
     const reportedError = {
       identifier: randomIdentifier(),
       message: action.error.message,
-      triggerAction: action.action
+      ...(action.options || {})
     };
 
     return {
       ...state,
-      reportedErrors: [ ...reportedErrors(state), reportedError ]
+      reportedErrors: [ ...reportedErrors(state, null), reportedError ]
     }
   }
 
   if (action.type === dismissError.type) {
-    const errors = reportedErrors(state).filter(
+    const errors = reportedErrors(state, null).filter(
       reportedError => reportedError.identifier !== action.identifier
     );
 
@@ -35,5 +44,3 @@ const reducer = (state : ErrorModuleState = defaultState, action) => {
 
   return state;
 }
-
-export default reducer;

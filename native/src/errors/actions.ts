@@ -1,9 +1,10 @@
 import { typedActionCreatorFactory } from '@galette/core';
-import { Action } from "./types";
 
-export const reportError = typedActionCreatorFactory('@Galette/REPORT_ERROR', (error: Error, action?: Action) => ({
+import { Action, ReportActionOptions } from "./types";
+
+export const reportError = typedActionCreatorFactory('@Galette/REPORT_ERROR', (error: Error, options?: ReportActionOptions) => ({
   error,
-  action,
+  options,
 }));
 
 export const dismissError = typedActionCreatorFactory('@Galette/DISMISS_ERROR', (identifier: string) => ({

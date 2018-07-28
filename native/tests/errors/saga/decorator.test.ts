@@ -18,7 +18,6 @@ describe('Saga decorator', () => {
       {
         type: '@Galette/REPORT_ERROR',
         error: new Error('Oups.'),
-        action: undefined
       }
     ])
   });
@@ -34,6 +33,28 @@ describe('Saga decorator', () => {
 
     expect(dispatched).toEqual([
       { type: 'YAY', foo: 'one', bar: 'two' }
+    ])
+  })
+
+  it('uses specific saga options such as the channel', () => {
+    const dispatched = [];
+    const saga = runSaga({
+      dispatch: (action) => dispatched.push(action),
+      getState: () => ({}),
+    }, handleSagaErrors(function*() {
+      throw new Error('Oups.')
+    }, {
+      channel: 'pictureUploader'
+    }));
+
+    expect(dispatched).toEqual([
+      {
+        type: '@Galette/REPORT_ERROR',
+        error: new Error('Oups.'),
+        options: {
+          channel: 'pictureUploader'
+        }
+      }
     ])
   })
 })

@@ -26,4 +26,12 @@ describe('Error reducer', () => {
       ]
     })
   })
+
+  it('stores the error options such as the channel', () => {
+    const state = reducer(undefined, reportError(new Error('Foo'), { channel: 'foo' }));
+
+    expect(state.reportedErrors).toBeTruthy();
+    expect(state.reportedErrors.length).toBe(1);
+    expect(state.reportedErrors[0].channel).toBe('foo');
+  })
 })

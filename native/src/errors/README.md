@@ -115,3 +115,49 @@ const mySaga = handleSagaErrors(function*() {
   // ...
 });
 ```
+
+## Channels
+
+Errors might belong to different groups: _global_ errors when something went really
+wrong, errors on a login form, while uploading picture, etc... In order to report
+and/or display them differently, you can use channels.
+
+### Reporting
+
+When reporting the error, you can set the channel, as a string.
+
+#### Manual reporting
+
+```javascript
+store.dispatch(reportError(new Error('Oups'), {
+  channel: 'pictureUploader'
+}))
+```
+
+#### `redux-saga` decorator
+
+```javascript
+const mySaga = handleSagaErrors(function*() {
+  // Your own saga code...
+}, {
+  channel: 'pictureUploader'
+});
+```
+
+### Display channel-ed messages
+
+The `ErrorWrapper` presented in the [Usage](#usage) section supports some properties
+as configuration. Use the `channel` property to drill down the messages to a channel:
+
+```javascript
+class YourComponent extends React.Component
+{
+  render() {
+    return (
+      <ErrorWrapper channel={"pictureUploader"}>
+        /* ... yours ... */
+      </ErrorWrapper>
+    )
+  }
+}
+```

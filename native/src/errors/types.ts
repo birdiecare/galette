@@ -2,6 +2,7 @@ export type Error = {
   message: string;
 };
 
+// Actions
 export type ReportedError = {
   // The unique identifier of the error
   identifier: string;
@@ -10,7 +11,12 @@ export type ReportedError = {
   message: string;
 
   // The original action that triggered this error
-  triggerAction?: any;
+  options?: ReportActionOptions;
+}
+
+export type ReportActionOptions = {
+  triggerAction?: Action;
+  channel?: string;
 }
 
 // State

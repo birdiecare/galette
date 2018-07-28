@@ -1,16 +1,19 @@
 import React, {Component} from 'react'
 import {ListView, View, Text, StyleSheet} from "react-native";
-import { ReportedError } from "../types";
-import { dismissError, reportError } from "../actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
+import { ReportedError } from "../types";
+import { dismissError, reportError } from "../actions";
 import ErrorMessage from "./ErrorMessage";
-import { reportedErrors } from "../selectors";
+import { reportedErrors } from "../store";
 
 type Props = {
   children: any;
   errors: ReportedError[];
   style?: any;
+  channel?: string;
+
   dismissError: (identifier: string) => void;
   reportError: (error: Error) => void;
   renderError?: (error: Error, onPress: () => void) => any;
@@ -64,9 +67,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(state => {
+export default connect((state, props) => {
   return {
-    errors: reportedErrors(state),
+    errors: reportedErrors(state, props.channel),
   }
 }, dispatch => bindActionCreators({
   dismissError,
