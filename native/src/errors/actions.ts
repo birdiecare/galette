@@ -1,17 +1,14 @@
-export const TYPE_REPORT_ERROR = '@Galette/REPORT_ERROR';
-export const TYPE_DISMISS_ERROR = '@Galette/DISMISS_ERROR';
+import { typedActionCreatorFactory } from '@galette/core';
 
-export function reportError(error: Error, action?: Action) {
-  return {
-    type: TYPE_REPORT_ERROR,
-    error,
-    action
-  }
+type Action = any & {
+  type: string;
 }
 
-export function dismissError(identifier: string) {
-  return {
-    type: TYPE_DISMISS_ERROR,
-    identifier,
-  }
-}
+export const reportError = typedActionCreatorFactory('@Galette/REPORT_ERROR', (error: Error, action?: Action) => ({
+  error,
+  action,
+}));
+
+export const dismissError = typedActionCreatorFactory('@Galette/DISMISS_ERROR', (identifier: string) => ({
+  identifier,
+}));

@@ -9,3 +9,5 @@ const middleware = store => next => action => {
     throw err
   }
 }
+
+export default middleware;

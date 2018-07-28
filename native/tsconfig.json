@@ -15,7 +15,9 @@
       ]
     },
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["react", "react-native", "jest"],
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*"

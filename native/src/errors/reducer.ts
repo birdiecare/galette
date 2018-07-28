@@ -1,20 +1,6 @@
-import { TYPE_REPORT_ERROR } from "./actions";
-import { Error } from "./types";
-
-type ReportedError = {
-  // The unique identifier of the error
-  identifier: string;
-
-  // The error
-  error: Error;
-
-  // The original action that triggered this error
-  triggerAction?: any;
-}
-
-type ErrorModuleState = {
-  reportedErrors: Error[];
-}
+import { reportError, dismissError } from "./actions";
+import { Error, ReportedError, ErrorModuleState } from "./types";
+import { reportedErrors } from "./selectors";
 
 const defaultState : ErrorModuleState = {
   reportedErrors: [],
@@ -23,14 +9,31 @@ const defaultState : ErrorModuleState = {
 const randomIdentifier = () => Math.random().toString(36).substring(2, 15)
 
 const reducer = (state : ErrorModuleState = defaultState, action) => {
-  if (action.type === TYPE_REPORT_ERROR) {
+  if (action.type === reportError.type) {
+    const reportedError = {
+      identifier: randomIdentifier(),
+      message: action.error.message,
+      triggerAction: action.action
+    };
+
     return {
       ...state,
-      reportedErrors: [ ...state.reportedErrors, {
-        identifier: randomIdentifier()
-        error: action.error,
-        triggerAction: action.action
-      }]
+      reportedErrors: [ ...reportedErrors(state), reportedError ]
     }
   }
+
+  if (action.type === dismissError.type) {
+    const errors = reportedErrors(state).filter(
+      reportedError => reportedError.identifier !== action.identifier
+    );
+
+    return {
+      ...state,
+      reportedErrors: errors,
+    }
+  }
+
+  return state;
 }
+
+export default reducer;

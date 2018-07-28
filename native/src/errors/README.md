@@ -27,4 +27,50 @@ const App => () => (
 )
 ```
 
+### Manually Report errors
+
+To programatically report errors, you can simply dispatch an action created by
+the `reportError` action creator.
+
+```javascript
+// YourComponent.js
+import { errors } from '@galette/native'
+const { actions: { reportError }} = errors;
+
+class YourComponent extends React.Component
+{
+  componentWillMount() {
+    this.props.reportError(new Error('Something went wrong.'));
+  }
+}
+
+export default connect(undefined, dispatch => bindActionCreators({
+  reportError,
+}, dispatch))(YourComponent);
+```
+
 ## Setup
+
+### reducer
+
+```javascript
+import { errors } from '@galette/native'
+
+// Add the reducer to your store...
+const reducer = (state, action) => {
+  return errors.reducer(
+    yourMainReducer,
+    action
+  );
+}
+```
+
+### redux-saga
+
+Configure the `onLoad` option of your Saga middleware.
+
+```javascript
+const sagaMiddleware = createSagaMiddleware({
+  onLoad: error => store.dispatch(reportError(error))
+})
+```
