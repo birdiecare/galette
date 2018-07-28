@@ -56,7 +56,7 @@ export default connect(undefined, dispatch => bindActionCreators({
 ```javascript
 import { errors } from '@galette/native'
 
-// Add the reducer to your store...
+// Add the `errors.reducer` reducer to your store...
 const reducer = (state, action) => {
   return errors.reducer(
     yourMainReducer,
