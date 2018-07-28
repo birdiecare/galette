@@ -22,6 +22,9 @@ yarn add @galette/core
 - [**Store**](./core/src/store)<br>
   Reducers, selectors and helpers to store your collections and items in your Redux store.
 
+- [**Typed Action Creator**](./core/src/typed-action-creator)<br>
+  No more exporting action types and action creators. Type is within the creator 🙃
+
 - [**Hydra**](./core/src/hydra)<br>
   Super-set of Store, adding specifics for Hydra APIs.
 
