@@ -70,7 +70,18 @@ const reducer = (state, action) => {
 Configure the `onLoad` option of your Saga middleware.
 
 ```javascript
+import createSagaMiddleware from 'redux-saga'
+import { errors } from '@galette/native'
+const { sagaErrorHandler } = errors;
+
+// Create your saga middleware with the `onError` handler
 const sagaMiddleware = createSagaMiddleware({
-  onLoad: error => store.dispatch(reportError(error))
+  onError: sagaErrorHandler,
 })
+
+// Create your `store`
+const store = /* ... */;
+
+// Set the `store` on the saga handler
+sagaErrorHandler.setStore(store);
 ```
