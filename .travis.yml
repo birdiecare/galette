@@ -20,3 +20,4 @@ jobs:
         - cd native/
         - yarn install
         - yarn run test
+        - yarn run build
