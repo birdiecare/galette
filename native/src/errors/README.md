@@ -161,3 +161,24 @@ class YourComponent extends React.Component
   }
 }
 ```
+
+## Reference
+
+### `ErrorWrapper` component
+
+The `ErrorWrapper` component accepts the following **optionnal** properties:
+
+- `channel` _string_<br>
+  The name of the channel to get the errors from
+
+- `floating` _boolean_<br>
+  By default, the errors are displayed as "floating" on top of other components.
+  Providing `false` will ensure your component will be displayed _normally_.  
+
+- `style` _object_<br>
+  Some styling for the error wrapper container. Typically, you might want to have
+  `style={{flex: 1}}` to ensure the wrapper takes the entirety of your screen.
+
+- `renderError` _function `(error, onPress) => React.Component`_<br>
+  Renders an individual error. By default, it uses our built-in [`ErrorMessage` component](./src/errors/components/ErrorMessage.tsx). You can use your own component
+  to have a custom user interface.

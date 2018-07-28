@@ -13,6 +13,7 @@ type Props = {
   errors: ReportedError[];
   style?: any;
   channel?: string;
+  floating?: boolean;
 
   dismissError: (identifier: string) => void;
   reportError: (error: Error) => void;
@@ -22,7 +23,7 @@ type Props = {
 class ErrorWrapper extends Component<Props, {}>
 {
   static defaultProps = {
-    errorMessageComponent: ErrorMessage,
+    floating: true,
   }
 
   componentDidCatch(error, info) {
@@ -30,13 +31,25 @@ class ErrorWrapper extends Component<Props, {}>
   }
 
   render() {
+    const errorsContainerStyles = [
+      styles.forwardContainer,
+    ];
+
+    if (this.props.floating) {
+      errorsContainerStyles.push(styles.floatingBottomContainer);
+    }
+
     return (
       <View style={this.props.style}>
-        {this.props.errors.map((error, index) => (
-          <View key={"error-"+index} style={[styles.floatingBottom, {bottom: index * 40}]}>
-            {this.renderError(error)}
+        {this.props.errors.length > 0 && (
+          <View style={errorsContainerStyles}>
+            {this.props.errors.map((error, index) => (
+              <View key={"error-"+index}>
+                {this.renderError(error)}
+              </View>
+            ))}
           </View>
-        ))}
+        )}
         {this.props.children}
       </View>
     );
@@ -58,8 +71,10 @@ class ErrorWrapper extends Component<Props, {}>
 }
 
 const styles = StyleSheet.create({
-  floatingBottom: {
-    zIndex: 500,
+  forwardContainer: {
+    zIndex: 500
+  },
+  floatingBottomContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
