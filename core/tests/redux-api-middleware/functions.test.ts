@@ -1,4 +1,5 @@
-import {createApiCallAction} from "../../src/redux-api-middleware/functions";
+import { ram } from "../../src";
+const { functions: { createApiCallAction }} = ram;
 
 describe('redux-api-middleware integration', () => {
   it('creates an API call', () => {
