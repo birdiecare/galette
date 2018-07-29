@@ -15,7 +15,6 @@ const addDefaultHydraOptions = (options : HydraOptions) : ReduceListOptions => {
   const {payloadResolver, ...rest} = options;
 
   return {
-    ...rest,
     itemIdentifierResolver: (item: any) => {
       return item['@id'];
     },
@@ -24,7 +23,8 @@ const addDefaultHydraOptions = (options : HydraOptions) : ReduceListOptions => {
     },
     totalItems: (action: Action) => {
       return payloadResolver(action)['hydra:totalItems'];
-    }
+    },
+    ...rest
   }
 };
 
