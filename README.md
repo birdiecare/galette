@@ -31,19 +31,6 @@ yarn add @galette/core
 - [**ram** (redux-api-middleware)](./core/src/redux-api-middleware)<br>
   Superset of Store, adding specifics for redux-api-middleware.
 
-## React Web
-
-### Installation
-
-```
-yarn add @galette/web
-```
-
-### Modules
-
-- [**TokenWall**](./web/src/token-wall)<br>
-  Adding a simple token wall for your early prototype.
-
 ## React Native
 
 ### Installation
@@ -66,3 +53,16 @@ yarn add @galette/native
 
 - [**EmptyState**](./native/src/empty-state)<br>
   Set of screens to be used when nothing has been found.
+
+## React Web
+
+### Installation
+
+```
+yarn add @galette/web
+```
+
+### Modules
+
+- [**TokenWall**](./web/src/token-wall)<br>
+  Adding a simple token wall for your early prototype.
