@@ -1,20 +1,17 @@
 import { CALL_API } from "redux-api-middleware"
 import {Action} from "../store/redux/reducers";
+import { createMappedReducer } from "../store/redux/functions";
+
+// BC-layer: start
+// Backward compatible layer for the `createReducer` function moved to the store module.
 
 export type ReducerHandler = (state : object, action: Action) => any;
 export type ReducerHandlers = {
   [actionName: string]: ReducerHandler;
 }
 
-export function createReducer(initialState : object, handlers : ReducerHandlers) {
-  return function reducer(state = initialState, action : Action) {
-    if (handlers.hasOwnProperty(action.type)) {
-      return handlers[action.type](state, action)
-    } else {
-      return state
-    }
-  }
-}
+export const createReducer = createMappedReducer;
+// BC-layer end
 
 export function createApiCallReducer(actionName: string) {
   return createReducer({

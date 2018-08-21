@@ -148,6 +148,9 @@ reduceListAndItems(state, action, {
 1. [`updateItem(state, identifier, propertiesToUpdate)`](#updateitem)<br>
    Patch a set of properties of an item in a state.
 
+1. [`createMappedReducer(initialState, reducerMapping)`](#createMappedReducer)<br>
+   Map reducers to a given set of action.
+
 ### `updateItem`
 
 Partially update an item in a list or object.
@@ -165,6 +168,29 @@ expect(
 ).toEqual(
  {"1234": {"name": "foo", "type", "baz"}}
 }
+```
+
+### `createMappedReducer`
+
+Especially useful when using types, you can use the `createMappedReducer` function to create a reducer only interested
+in a small set of actions. Each action will have a specific "mini-reducer", in which you can type the action:
+
+```javascript
+export const reducer = createMappedReducer(defaultState, {
+  [reportError.type]: (state: ErrorModuleState, action: ReportErrorAction) => {
+    return {
+      ...state,
+      // ...
+    }
+  },
+
+  [dismissError.type]: (state: ErrorModuleState, action: DismissErrorAction) => {
+    return {
+      ...state,
+      // ...
+    }
+  }
+});
 ```
 
 ## How is it stored?
