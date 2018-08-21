@@ -1,11 +1,11 @@
-import { reportError, dismissError } from "./actions";
-import { Error, ReportedError, ErrorModuleState } from "./types";
+import { store } from "@galette/core";
+import {reportError, dismissError, ReportErrorAction, DismissErrorAction} from "./actions";
+import { ErrorModuleState } from "./types";
+const { functions: { createMappedReducer } } = store;
 
 const defaultState : ErrorModuleState = {
   reportedErrors: [],
-}
-
-const randomIdentifier = () => Math.random().toString(36).substring(2, 15)
+};
 
 export const reportedErrors = (state: ErrorModuleState & any = defaultState, channel?: string) => {
   const errors = state.reportedErrors || [];
@@ -15,12 +15,12 @@ export const reportedErrors = (state: ErrorModuleState & any = defaultState, cha
   }
 
   return errors.filter(error => error.channel === channel);
-}
+};
 
-export const reducer = (state : ErrorModuleState = defaultState, action) => {
-  if (action.type === reportError.type) {
+export const reducer = createMappedReducer(defaultState, {
+  [reportError.type]: (state: ErrorModuleState, action: ReportErrorAction) => {
     const reportedError = {
-      identifier: randomIdentifier(),
+      identifier: action.identifier,
       message: action.error.message,
       ...(action.options || {})
     };
@@ -29,9 +29,9 @@ export const reducer = (state : ErrorModuleState = defaultState, action) => {
       ...state,
       reportedErrors: [ ...reportedErrors(state, null), reportedError ]
     }
-  }
+  },
 
-  if (action.type === dismissError.type) {
+  [dismissError.type]: (state: ErrorModuleState, action: DismissErrorAction) => {
     const errors = reportedErrors(state, null).filter(
       reportedError => reportedError.identifier !== action.identifier
     );
@@ -41,6 +41,4 @@ export const reducer = (state : ErrorModuleState = defaultState, action) => {
       reportedErrors: errors,
     }
   }
-
-  return state;
-}
+});

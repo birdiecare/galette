@@ -2,7 +2,7 @@ import { runSaga } from 'redux-saga'
 import { put } from 'redux-saga/effects'
 
 import { errors } from '../../../src'
-const { handleSagaErrors, actions: { reportError } } = errors;
+const { handleSagaErrors } = errors;
 
 describe('Saga decorator', () => {
   it('reports an error', () => {
@@ -14,12 +14,9 @@ describe('Saga decorator', () => {
       throw new Error('Oups.')
     }));
 
-    expect(dispatched).toEqual([
-      {
-        type: '@Galette/REPORT_ERROR',
-        error: new Error('Oups.'),
-      }
-    ])
+    expect(dispatched.length).toBe(1);
+    expect(dispatched[0].type).toBe('@Galette/REPORT_ERROR');
+    expect(dispatched[0].error).toEqual(new Error('Oups.'));
   });
 
   it('forwards the saga arguments', () => {
@@ -41,20 +38,16 @@ describe('Saga decorator', () => {
     const saga = runSaga({
       dispatch: (action) => dispatched.push(action),
       getState: () => ({}),
-    }, handleSagaErrors(function*() {
+    }, handleSagaErrors(function* () {
       throw new Error('Oups.')
     }, {
       channel: 'pictureUploader'
     }));
 
-    expect(dispatched).toEqual([
-      {
-        type: '@Galette/REPORT_ERROR',
-        error: new Error('Oups.'),
-        options: {
-          channel: 'pictureUploader'
-        }
-      }
-    ])
+    expect(dispatched.length).toBe(1);
+    expect(dispatched[0].error).toEqual(new Error('Oups.'));
+    expect(dispatched[0].options).toEqual({
+      channel: 'pictureUploader'
+    });
   })
 })
