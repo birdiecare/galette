@@ -1,4 +1,10 @@
-import { CALL_API } from "redux-api-middleware"
+let CALL_API : string;
+try {
+  CALL_API = require("redux-api-middleware").CALL_API;
+} catch (e) {
+  CALL_API = 'MODULE_NOT_INSTALLED';
+}
+
 import {Action} from "../store/redux/reducers";
 import { createMappedReducer } from "../store/redux/functions";
 
