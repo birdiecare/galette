@@ -8,7 +8,7 @@ export type ReportErrorAction = Action & {
   error: Error;
   identifier: string;
 
-  options?: ReportErrorAction;
+  options?: ReportActionOptions;
 }
 
 type ReportErrorActionCreator = (error: Error, options?: ReportActionOptions, identifier?: string) => ReportErrorAction;
