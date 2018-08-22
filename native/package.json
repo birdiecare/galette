@@ -1,6 +1,6 @@
 {
   "name": "@galette/native",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "scripts": {
     "release": "npm run build && npm publish",
     "test": "jest",
@@ -8,7 +8,7 @@
     "build-ts": "tsc"
   },
   "dependencies": {
-    "@galette/core": "^0.0.6",
+    "@galette/core": "^0.0.7",
     "react-native-elements": "^0.19.1",
     "react-native-scrollable-mixin": "^1.0.1",
     "react-native-vector-icons": "^4.6.0",
