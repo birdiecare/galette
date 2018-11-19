@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, ReactNode} from 'react'
 import {ListView, View, Text, StyleProp, ViewStyle} from "react-native";
 import {List, FormLabel} from "react-native-elements";
 import ZeroStatePlaceholder from "../../empty-state/ZeroStatePlaceholder";
@@ -9,9 +9,8 @@ export type Props = {
   renderRow: (item: any, id: string | number) => any;
   title?: string;
   listViewStyle?: StyleProp<ViewStyle>;
-
   zeroStatePlaceHolderMessage?: string;
-  zeroStatePlaceHolder?: any;
+  zeroStatePlaceHolder?: ReactNode;
 };
 
 export default class CollectionComponent extends Component<Props, {}> {
