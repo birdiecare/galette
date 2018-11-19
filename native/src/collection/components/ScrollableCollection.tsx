@@ -9,7 +9,7 @@ type Props = CollectionComponentProps & {
     onRefresh: (page?: number) => void;
     header?: ReactNode;
     numberOfItemsForFullPage?: StyleProp<ViewStyle>;
-    style: any;
+    style?: any;
 }
 
 export default class ScrollableCollection extends Component<Props, {}>
