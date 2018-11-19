@@ -28,42 +28,27 @@ exports[`it displays only one loading indicator on the first page 1`] = `
 >
   <RCTRefreshControl />
   <View>
-    <View>
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#ffffff",
-              "borderColor": "#bbb",
-              "borderTopWidth": 1,
-              "marginTop": 20,
-            },
-            undefined,
-          ]
+    <RCTScrollView
+      dataSource={
+        ListViewDataSource {
+          "items": 1,
         }
-      >
-        <RCTScrollView
-          dataSource={
-            ListViewDataSource {
-              "items": 1,
-            }
-          }
-          enableEmptySections={true}
-          renderRow={[Function]}
-          renderScrollComponent={[Function]}
+      }
+      enableEmptySections={true}
+      renderRow={[Function]}
+      renderScrollComponent={[Function]}
+      style={undefined}
+    >
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
         >
-          <View>
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-            >
-              Row
-            </Text>
-          </View>
-        </RCTScrollView>
+          Row
+        </Text>
       </View>
-    </View>
+    </RCTScrollView>
   </View>
 </RCTScrollView>
 `;
@@ -96,49 +81,34 @@ exports[`it displays the bottom loading indicator when more than one page has be
 >
   <RCTRefreshControl />
   <View>
-    <View>
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#ffffff",
-              "borderColor": "#bbb",
-              "borderTopWidth": 1,
-              "marginTop": 20,
-            },
-            undefined,
-          ]
+    <RCTScrollView
+      dataSource={
+        ListViewDataSource {
+          "items": 2,
         }
-      >
-        <RCTScrollView
-          dataSource={
-            ListViewDataSource {
-              "items": 2,
-            }
-          }
-          enableEmptySections={true}
-          renderRow={[Function]}
-          renderScrollComponent={[Function]}
+      }
+      enableEmptySections={true}
+      renderRow={[Function]}
+      renderScrollComponent={[Function]}
+      style={undefined}
+    >
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
         >
-          <View>
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-            >
-              Row
-            </Text>
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-            >
-              Row
-            </Text>
-          </View>
-        </RCTScrollView>
+          Row
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          Row
+        </Text>
       </View>
-    </View>
+    </RCTScrollView>
     <View
       style={
         Object {
