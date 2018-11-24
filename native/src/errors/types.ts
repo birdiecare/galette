@@ -14,6 +14,7 @@ export type ReportedError = {
 export type ReportActionOptions = {
   triggerAction?: Action;
   channel?: string;
+  message?: string;
 }
 
 // State
