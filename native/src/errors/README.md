@@ -27,7 +27,7 @@ const App => () => (
 )
 ```
 
-### Manually Report errors
+### Manually Report errors
 
 To programatically report errors, you can simply dispatch an action created by
 the `reportError` action creator.
@@ -65,7 +65,7 @@ const reducer = (state, action) => {
 }
 ```
 
-### redux-saga
+### redux-saga
 
 Integrating `redux-saga` can be done in two (complementary) ways:
 
@@ -73,7 +73,7 @@ Integrating `redux-saga` can be done in two (complementary) ways:
    at once.
 2. [Decorate your sagas](#2-saga-decorator-method) for more flexibility and features.
 
-#### 1. `onLoad` method
+#### 1. `onLoad` method
 
 The `createSagaMiddleware` can take an `onError` callback. Galette ships with one
 that will report the error for you.
@@ -116,35 +116,41 @@ const mySaga = handleSagaErrors(function*() {
 });
 ```
 
-## Channels
+## Options
 
-Errors might belong to different groups: _global_ errors when something went really
-wrong, errors on a login form, while uploading picture, etc... In order to report
-and/or display them differently, you can use channels.
-
-### Reporting
-
-When reporting the error, you can set the channel, as a string.
-
-#### Manual reporting
+You can add options when reporting an error.
+This can be done either manually:
 
 ```javascript
-store.dispatch(reportError(new Error('Oups'), {
+store.dispatch(reportError(new Error('ENOENT: File not found: /bad/file/path'), {
+  message: 'There was an error while uploading the picture',
   channel: 'pictureUploader'
 }))
 ```
 
-#### `redux-saga` decorator
+Or using a `redux-saga` decorator
 
 ```javascript
 const mySaga = handleSagaErrors(function*() {
   // Your own saga code...
 }, {
+  message: 'There was an error while uploading the picture',
   channel: 'pictureUploader'
 });
 ```
 
-### Display channel-ed messages
+### Message
+
+You can override the default error message by adding specifying the `message` in the options.
+
+### Channels
+
+Errors might belong to different groups: _global_ errors when something went really
+wrong, errors on a login form, while uploading picture, etc... In order to report
+and/or display them differently, you can use channels.
+
+
+## Display channel-ed messages
 
 The `ErrorWrapper` presented in the [Usage](#usage) section supports some properties
 as configuration. Use the `channel` property to drill down the messages to a channel:
