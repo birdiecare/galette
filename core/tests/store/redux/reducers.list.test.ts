@@ -40,9 +40,7 @@ describe('Reduce list of items', () => {
     expect(reduced).toEqual({
       list: {
         loading: false,
-        error: {
-          message: 'Invalid something...'
-        }
+        error: 'Invalid something...'
       }
     })
   })
@@ -90,7 +88,36 @@ describe('Reduce list of items', () => {
     expect(state).toEqual({
       list: {
         loading: false,
-        error: { oups: 'Meh' }
+        error: 'Something went wrong.'
+      }
+    })
+  })
+
+  it('supports a custom error message resolver', () => {
+    const reduced = reduceList({
+      list: {
+        loading: true,
+        error: null,
+      }
+    }, {
+      type: 'MY_ACTION_FAILED',
+      payload: {
+        error: {
+          myComplexErrorSchema: 'With a message'
+        }
+      }
+    }, {
+      items: [],
+      itemIdentifierResolver: (item : any) => item.id,
+      actionPrefix: 'MY_ACTION',
+      listKeyInState: 'list',
+      errorMessageResolver: (action: any) => action.payload.error.myComplexErrorSchema,
+    })
+
+    expect(reduced).toEqual({
+      list: {
+        loading: false,
+        error: 'With a message'
       }
     })
   })

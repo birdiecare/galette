@@ -27,6 +27,7 @@ export type ActionLifecycleOptions = {
 export type ReduceListOptions = ReduceItemsOptions & ActionLifecycleOptions & {
   listKeyInState: string;
 
+  errorMessageResolver?: (action: Action) => string;
   totalItems?: (action: Action) => number;
 };
 
@@ -35,7 +36,7 @@ export type ReducedList = {
 
   up_to_page?: number;
   loading?: number;
-  error?: any;
+  error?: string;
   total_items?: number;
 };
 
@@ -62,6 +63,12 @@ function itemsFromAction(action: Action, options: ReduceItemsOptions) {
 
   return items;
 }
+
+const defaultErrorMessageResolver = (action: Action) => {
+  const messageSource = action.error || action.payload || {};
+
+  return messageSource.message || messageSource.error || 'Something went wrong.';
+};
 
 export const reduceItems = (state = {}, action : Action, options : ReduceItemsOptions) => {
   let items = itemsFromAction(action, options);
@@ -119,9 +126,10 @@ export const reduceList = (state : any = {}, action : Action, options : ReduceLi
   }
 
   if (action.type === options.actions.failed) {
+    const errorResolver = options.errorMessageResolver ? options.errorMessageResolver : defaultErrorMessageResolver;
     return updateItem(state, options.listKeyInState, {
       loading: false,
-      error: action.error || action.payload,
+      error: errorResolver(action),
     });
   }
 
