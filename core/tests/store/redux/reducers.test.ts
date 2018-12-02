@@ -19,9 +19,9 @@ describe('Reducers for list & items', () => {
         loading: true
       }
     })
-  })
+  });
 
-  it('does not do anything for an unknown action', () => {
+  it('does nothing for an unknown action', () => {
     const state = reduceListAndItems(undefined, { type: 'SOMETHING_COMPLETELY_DIFFERENT' }, {
       actions: {
         starting: 'IT_STARTS',
@@ -33,6 +33,30 @@ describe('Reducers for list & items', () => {
       itemIdentifierResolver: (item : any) => item.id,
     })
 
-    expect(state).toEqual({"a-list": {}});
-  })
+    expect(state).toEqual({});
+  });
+
+  it('does not do remove the existing items for an unknown action', () => {
+    const initialState = {
+      list: {
+        identifiers: ['abc']
+      },
+      abc: {
+        firstname: 'Sam'
+      }
+    };
+
+    const state = reduceListAndItems(initialState, { type: 'SOMETHING_COMPLETELY_DIFFERENT' }, {
+      actions: {
+        starting: 'IT_STARTS',
+        succeed: 'IT_WORKED',
+        failed: 'IT_FAILED'
+      },
+      items: [],
+      listKeyInState: 'list',
+      itemIdentifierResolver: (item : any) => item.id,
+    });
+
+    expect(state).toEqual(initialState);
+  });
 });
