@@ -1,12 +1,14 @@
-export type ActionCreator<A extends any[], R extends any> = ((...args: A) => R & {
-  type: string;
-});
-
-export type ActionCreatorWithType<A extends any[], R extends any> = ActionCreator<A, R> & {
+export type TypedAction<R> = R & {
   type: string;
 }
 
-export default function typedActionCreatorFactory<A extends any[], R extends any>(type: string, resolver: (...args: A) => R) : ActionCreatorWithType<A, R>
+export type ActionCreator<A extends any[], R extends any> = ((...args: A) => TypedAction<R>);
+
+export type TypedActionCreator<A extends any[], R extends any> = ActionCreator<A, R> & {
+  type: string;
+}
+
+export default function typedActionCreatorFactory<A extends any[], R extends any>(type: string, resolver: (...args: A) => R) : TypedActionCreator<A, R>
 {
   const actionCreator = (...args: A) => {
     const properties = resolver(...args);
