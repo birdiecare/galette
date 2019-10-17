@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@galette/core": "^0.0.7",
+    "react-clone-referenced-element": "^1.1.0",
     "react-native-elements": "^0.19.1",
     "react-native-scrollable-mixin": "^1.0.1",
     "react-native-vector-icons": "^4.6.0",
