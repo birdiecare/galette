@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import {ListView, View, Text} from "react-native";
+import {View, Text} from "react-native";
+import ListView from "deprecated-react-native-listview";
+
 import {List, FormLabel} from "react-native-elements";
 import ZeroStatePlaceholder from "../../empty-state/ZeroStatePlaceholder";
 import Collection from "../Collection";
