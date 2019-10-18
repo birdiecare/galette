@@ -3,7 +3,8 @@
     "declaration": true,
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "lib": ["es7"],
+    "target": "es5",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -15,7 +16,7 @@
         "src/types/*"
       ]
     },
-    "types": ["jasmine", "node"]
+    "types": ["jest", "node"]
   },
   "include": [
     "src/**/*"

@@ -1,7 +1,4 @@
-os: linux
-dist: trusty
-sudo: false
-language: node
+language: node_js
 
 cache:
   - yarn

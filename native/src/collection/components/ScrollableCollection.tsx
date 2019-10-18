@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import {RefreshControl, ScrollView} from "react-native";
+import React, { Component, ReactNode } from 'react'
+import {RefreshControl, ScrollView, StyleProp, ViewStyle} from "react-native";
 import CollectionComponent, { Props as CollectionComponentProps } from "./CollectionComponent";
 import InfiniteScrollView from "../../infinite-scroll-view/InfiniteScrollView";
 import Collection from "../Collection";
@@ -7,8 +7,9 @@ import Collection from "../Collection";
 type Props = CollectionComponentProps & {
     collection: Collection;
     onRefresh: (page?: number) => void;
-    header?: Component;
-    numberOfItemsForFullPage?: number;
+    header?: ReactNode;
+    numberOfItemsForFullPage?: StyleProp<ViewStyle>;
+    style?: any;
 }
 
 export default class ScrollableCollection extends Component<Props, {}>
@@ -26,8 +27,9 @@ export default class ScrollableCollection extends Component<Props, {}>
         let { collection } = this.props;
 
         return (
+          <React.Fragment>
             <InfiniteScrollView
-                style={{flex: 1}}
+                style={this.props.style || {flex: 1}}
                 refreshControl={
                     <RefreshControl
                         refreshing={collection.isLoading()}
@@ -48,6 +50,7 @@ export default class ScrollableCollection extends Component<Props, {}>
 
                 <CollectionComponent {...this.props} />
             </InfiniteScrollView>
+          </React.Fragment>
         )
     }
 

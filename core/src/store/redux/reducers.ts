@@ -27,6 +27,7 @@ export type ActionLifecycleOptions = {
 export type ReduceListOptions = ReduceItemsOptions & ActionLifecycleOptions & {
   listKeyInState: string;
 
+  errorMessageResolver?: (action: Action) => string;
   totalItems?: (action: Action) => number;
 };
 
@@ -35,11 +36,29 @@ export type ReducedList = {
 
   up_to_page?: number;
   loading?: number;
-  error?: any;
+  error?: string;
   total_items?: number;
 };
 
+const resolveActionsToHandle = (options: ReduceListOptions) => {
+  if (options.actionPrefix) {
+    options.actions = {
+      starting: options.actionPrefix+'_SENT',
+      failed: options.actionPrefix+'_FAILED',
+      succeed: options.actionPrefix+'_RECEIVED',
+    }
+  }
+
+  return options.actions;
+};
+
 export const reduceListAndItems = (state = {}, action : Action, options : ReduceListOptions) => {
+  const actions = resolveActionsToHandle(options);
+  const actionTypes = Object.keys(actions).map((key: 'starting' | 'failed' | 'succeed') => actions[key]);
+  if (actionTypes.indexOf(action.type) === -1) {
+    return state;
+  }
+
   return reduceList(
     reduceItems(
       state,
@@ -63,6 +82,12 @@ function itemsFromAction(action: Action, options: ReduceItemsOptions) {
   return items;
 }
 
+const defaultErrorMessageResolver = (action: Action) => {
+  const messageSource = action.error || action.payload || {};
+
+  return messageSource.message || messageSource.error || 'Something went wrong.';
+};
+
 export const reduceItems = (state = {}, action : Action, options : ReduceItemsOptions) => {
   let items = itemsFromAction(action, options);
 
@@ -76,27 +101,21 @@ export const reduceItems = (state = {}, action : Action, options : ReduceItemsOp
 };
 
 export const reduceList = (state : any = {}, action : Action, options : ReduceListOptions) : ReducedList => {
-  if (options.actionPrefix) {
-    options.actions = {
-      starting: options.actionPrefix+'_SENT',
-      failed: options.actionPrefix+'_FAILED',
-      succeed: options.actionPrefix+'_RECEIVED',
-    }
-  }
+  const actions = resolveActionsToHandle(options);
 
   // If the list does not exists.
   if (!state[options.listKeyInState]) {
     state = updateItem(state, options.listKeyInState, {});
   }
 
-  if (action.type === options.actions.starting) {
+  if (action.type === actions.starting) {
     return updateItem(state, options.listKeyInState, {
       loading: true,
       error: null,
     });
   }
 
-  if (action.type === options.actions.succeed) {
+  if (action.type === actions.succeed) {
     const items = itemsFromAction(action, options);
     const totalItems = 'function' === typeof options.totalItems
       ? options.totalItems(action)
@@ -118,10 +137,11 @@ export const reduceList = (state : any = {}, action : Action, options : ReduceLi
     });
   }
 
-  if (action.type === options.actions.failed) {
+  if (action.type === actions.failed) {
+    const errorResolver = options.errorMessageResolver ? options.errorMessageResolver : defaultErrorMessageResolver;
     return updateItem(state, options.listKeyInState, {
       loading: false,
-      error: action.error || action.payload,
+      error: errorResolver(action),
     });
   }
 
