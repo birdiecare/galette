@@ -1,19 +1,20 @@
-import React, {Component, ReactNode} from 'react'
-import {View, Text, StyleProp, ViewStyle} from "react-native";
-import ListView from "deprecated-react-native-listview";
+import React, { Component, ReactNode } from 'react'
+import { StyleProp, Text, ViewStyle } from 'react-native'
 
-import {List, FormLabel} from "react-native-elements";
-import ZeroStatePlaceholder from "../../empty-state/ZeroStatePlaceholder";
-import Collection from "../Collection";
+import Collection from '../Collection'
+import { FormLabel } from 'react-native-elements'
+import ListView from 'deprecated-react-native-listview'
+import ZeroStatePlaceholder from '../../empty-state/ZeroStatePlaceholder'
 
 export type Props = {
-  collection: Collection;
-  renderRow: (item: any, id: string | number) => any;
-  title?: string;
-  listViewStyle?: StyleProp<ViewStyle>;
-  zeroStatePlaceHolderMessage?: string;
-  zeroStatePlaceHolder?: ReactNode;
-};
+  collection: Collection
+  renderRow: (item: any, id: string | number) => any
+  title?: string
+  listViewStyle?: StyleProp<ViewStyle>
+  zeroStatePlaceHolderMessage?: string
+  zeroStatePlaceHolder?: ReactNode
+  testID?: string
+}
 
 export default class CollectionComponent extends Component<Props, {}> {
   render() {
@@ -37,6 +38,7 @@ export default class CollectionComponent extends Component<Props, {}> {
         )}
 
         <ListView
+          testID={this.props.testID}
           dataSource={dataSource}
           enableEmptySections={true}
           style={this.props.listViewStyle}
