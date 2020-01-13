@@ -20,5 +20,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "redux": "^4.0.5"
+  }
 }

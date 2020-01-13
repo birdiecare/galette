@@ -1,6 +1,6 @@
 import { ReportActionOptions } from "./types";
 import typedActionCreatorFactory from "../../typed-action-creator/factory";
-import { Action } from "./reducers";
+import {Action} from "redux";
 
 const randomIdentifier = () => Math.random().toString(36).substring(2, 15)
 
