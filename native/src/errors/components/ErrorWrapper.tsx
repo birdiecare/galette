@@ -3,10 +3,11 @@ import {View, StyleSheet} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { ReportedError } from "../types";
-import { reportError } from "../actions";
 import ErrorMessage from "./ErrorMessage";
 import { reportedErrors } from "../store";
+import {store, ReportedError} from "@galette/core";
+
+const {actions: {reportError}} = store;
 
 type Props = {
   children: any;
@@ -76,7 +77,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
+    zIndex: 0
   }
 })
 

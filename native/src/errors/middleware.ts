@@ -1,10 +1,11 @@
-import { reportError } from "./actions";
+import { store } from "@galette/core";
+const {actions} = store;
 
 const middleware = store => next => action => {
   try {
     return next(action)
   } catch (err) {
-    next(reportError(err, action))
+    next(actions.reportError(err, action))
 
     throw err
   }

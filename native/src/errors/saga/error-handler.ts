@@ -1,4 +1,5 @@
-import { reportError } from "../actions";
+import {store} from "@galette/core";
+const {actions: {reportError}} = store;
 
 type Store = {
   dispatch: (action: any) => any;

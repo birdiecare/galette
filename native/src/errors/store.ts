@@ -1,6 +1,6 @@
-import { store } from "@galette/core";
-import {reportError, dismissError, ReportErrorAction, DismissErrorAction} from "./actions";
-import { ErrorModuleState } from "./types";
+import { store, ReportErrorAction, DismissErrorAction, ErrorModuleState } from "@galette/core";
+
+const {actions: {reportError, dismissError } } = store;
 const { functions: { createMappedReducer } } = store;
 
 const defaultState : ErrorModuleState = {
