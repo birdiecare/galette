@@ -13,31 +13,19 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: Core Tests
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run core tests & build for native tests
         run: | 
           cd core 
-          npm install
+          yarn install
           npm test
-          cd ..
-
-      - name: Build core for native tests
-        run: |
-          export GALETTE_DIR=$PWD;
-          cd native
-          npm install
-          pushd node_modules/@galette
-          rm -rf core && ln $GALETTE_DIR/core core
-          popd
-          cd core
           npm run build
-          cd ..
 
       - name: Native Tests
         run: | 
           cd native
-          npm install
+          yarn install
           npm test
           cd ..
-
-
-

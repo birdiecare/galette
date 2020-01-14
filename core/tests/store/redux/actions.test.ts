@@ -1,5 +1,4 @@
-import { errors } from '../../src'
-const { reducer, actions: { reportError } } = errors;
+import { reportError } from '../../../src/store/redux/actions';
 
 describe('Action creators', () => {
   it('generates an identifier for the errors', () => {

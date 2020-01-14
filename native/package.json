@@ -1,6 +1,6 @@
 {
   "name": "@galette/native",
-  "version": "0.0.13",
+  "version": "0.0.12",
   "scripts": {
     "release": "npm run build && npm publish",
     "test": "jest",
@@ -8,8 +8,9 @@
     "build-ts": "tsc"
   },
   "dependencies": {
-    "@galette/core": "^0.0.11",
+    "@galette/core": "0.0.11",
     "deprecated-react-native-listview": "0.0.6",
+    "husky": "^3.0.9",
     "react-clone-referenced-element": "^1.1.0",
     "react-native-elements": "^0.19.1",
     "react-native-scrollable-mixin": "^1.0.1",
@@ -27,7 +28,9 @@
     "babel-preset-react-native": "4.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "husky": "3.0.9",
     "jest": "23.2.0",
+    "pretty-quick": "^2.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.7.0",
     "react-native": "0.61.2",
@@ -37,25 +40,6 @@
     "redux-saga": "^0.16.0",
     "ts-jest": "^22.4.2",
     "typescript": "^2.8.1"
-  },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
-      "\\.(js|ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "testPathIgnorePatterns": [
-      "\\.snap$",
-      "<rootDir>/node_modules/",
-      "<rootDir>/lib/"
-    ],
-    "cacheDirectory": ".jest/cache"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -1,5 +1,5 @@
-import { errors } from '../../src'
-const { reducer, actions: { reportError, dismissError } } = errors;
+import { reducer, actions } from '../../src/errors'
+const {reportError, dismissError} = actions;
 
 describe('Error reducer', () => {
   it('stores reported errors', () => {
@@ -12,6 +12,7 @@ describe('Error reducer', () => {
 
   it('remove dismissed errors', () => {
     const state = reducer({
+      // @ts-ignore
       somethingElse: 'foo',
       reportedErrors: [
         {identifier: '0978azerty', message: 'To be investigated'},
