@@ -1,6 +1,6 @@
 {
   "name": "@galette/core",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "scripts": {
     "build": "npm run build-ts",
     "test": "jest --verbose",
