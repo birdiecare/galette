@@ -10,5 +10,5 @@ export {
   reducers,
   functions,
   selectors,
-  actions
+  actions,
 }

@@ -9,3 +9,5 @@ export {
   ram,
   typedActionCreatorFactory,
 }
+
+export * from "./store/redux/types"
