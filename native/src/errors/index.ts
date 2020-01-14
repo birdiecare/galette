@@ -4,6 +4,9 @@ import middleware from "./middleware";
 import { reducer, reportedErrors } from "./store";
 import sagaErrorHandler from "./saga/error-handler";
 import handleSagaErrors from "./saga/decorator";
+import {store} from "@galette/core";
+
+const {actions} = store;
 
 const components = {
   ErrorWrapper,
@@ -21,4 +24,5 @@ export {
   selectors,
   sagaErrorHandler,
   handleSagaErrors,
+  actions,
 };

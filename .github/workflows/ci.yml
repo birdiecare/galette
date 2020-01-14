@@ -1,0 +1,43 @@
+name: CI
+
+on: [push]
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Core Tests
+        run: | 
+          cd core 
+          npm install
+          npm test
+          cd ..
+
+      - name: Build core for native tests
+        run: |
+          export GALETTE_DIR=$PWD;
+          cd native
+          npm install
+          pushd node_modules/@galette
+          rm -rf core && ln $GALETTE_DIR/core core
+          popd
+          cd core
+          npm run build
+          cd ..
+
+      - name: Native Tests
+        run: | 
+          cd native
+          npm install
+          npm test
+          cd ..
+
+
+
