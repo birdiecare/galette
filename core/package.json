@@ -1,6 +1,6 @@
 {
   "name": "@birdiecare/galette-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "build": "npm run build-ts",
     "test": "jest --verbose",
