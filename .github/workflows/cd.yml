@@ -20,7 +20,10 @@ jobs:
         run: |
           cd core
           yarn install
-          npm run build && npm run release
+          npm run build
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   deploy-native:
     runs-on: ubuntu-latest
@@ -36,5 +39,7 @@ jobs:
         run: |
           cd native
           yarn install
-          npm run build && npm run release
-  
+          npm run build
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
