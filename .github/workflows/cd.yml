@@ -18,6 +18,7 @@ jobs:
 
       - name: Build and release
         run: |
+          yarn install
           cd core
           yarn install
           npm run build
@@ -37,6 +38,7 @@ jobs:
 
       - name: Build and release
         run: |
+          yarn install
           cd native
           yarn install
           npm run build
