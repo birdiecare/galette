@@ -1,11 +1,16 @@
 {
   "name": "@birdiecare/galette-core",
-  "version": "0.0.11",
+  "version": "1.0.0",
   "scripts": {
     "build": "npm run build-ts",
     "test": "jest --verbose",
     "build-ts": "tsc",
     "release": "npm run build && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/birdiecare/galette",
+    "directory": "core"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",

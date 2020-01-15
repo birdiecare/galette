@@ -1,6 +1,6 @@
 {
   "name": "@birdiecare/galette-native",
-  "version": "0.0.12",
+  "version": "1.0.0",
   "scripts": {
     "release": "npm run build && npm publish",
     "test": "jest",
@@ -8,7 +8,7 @@
     "build-ts": "tsc"
   },
   "dependencies": {
-    "@birdiecare/galette-core": "0.0.11",
+    "@birdiecare/galette-core": "1.0.0",
     "deprecated-react-native-listview": "0.0.6",
     "react-clone-referenced-element": "^1.1.0",
     "react-native-elements": "^0.19.1",
@@ -17,6 +17,11 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-mock-store": "^1.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/birdiecare/galette",
+    "directory": "native"
   },
   "devDependencies": {
     "@types/jest": "^22.2.2",
@@ -40,24 +45,23 @@
     "ts-jest": "^22.4.2",
     "typescript": "^2.8.1"
   },
-  "jest": {	
-    "preset": "react-native",	
-    "moduleFileExtensions": [	
-      "ts",	
-      "tsx",	
-      "js"	
-    ],	
-    "transform": {	
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
       "^.+\\.tsx?": "ts-jest",
       "^.+\\.js$": "<rootDir>/../node_modules/react-native/jest/preprocessor.js"
-    },	
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",	
-
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "transformIgnorePatterns": [
       "/node_modules/?!(react-native)/",
       "galette/node_modules/?!(react-native)/"
     ],
-    "cacheDirectory": ".jest/cache"	
+    "cacheDirectory": ".jest/cache"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
