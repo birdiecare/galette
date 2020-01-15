@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/kametventures/galette" target="_blank">
+<p align="center"><a href="https://github.com/birdiecare/galette" target="_blank">
     <img src="./assets/galette.png" height="50">
 </a></p>
 
@@ -14,7 +14,7 @@ The core contains modules that are generic. They can be used both for React and 
 ### Installation
 
 ```
-yarn add @galette/core
+yarn add @birdiecare/galette-core
 ```
 
 ### Modules
@@ -36,7 +36,7 @@ yarn add @galette/core
 ### Installation
 
 ```
-yarn add @galette/native
+yarn add @birdiecare/galette-native
 ```
 
 ### Modules
@@ -59,7 +59,7 @@ yarn add @galette/native
 ### Installation
 
 ```
-yarn add @galette/web
+yarn add @birdiecare/galette-web
 ```
 
 ### Modules

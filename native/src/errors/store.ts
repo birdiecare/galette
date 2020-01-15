@@ -1,4 +1,4 @@
-import { store, ReportErrorAction, DismissErrorAction, ErrorModuleState } from "@galette/core";
+import { store, ReportErrorAction, DismissErrorAction, ErrorModuleState } from "@birdiecare/galette-core";
 
 const {actions: {reportError, dismissError } } = store;
 const { functions: { createMappedReducer } } = store;

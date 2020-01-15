@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 
 import ErrorMessage from "./ErrorMessage";
 import { reportedErrors } from "../store";
-import {store, ReportedError} from "@galette/core";
+import {store, ReportedError} from "@birdiecare/galette-core";
 
 const {actions: {reportError}} = store;
 

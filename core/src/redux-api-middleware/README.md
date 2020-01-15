@@ -11,7 +11,7 @@ this module when you need to reduce `redux-api-middleware` actions, like in the
 following example:
 
 ```javascript
-import { store, ram } from "@galette/core";
+import { store, ram } from "@birdiecare/galette-core";
 const { functions: { updateItem }, reducers: { reduceList, reduceItems } } = store;
 const { functions: { payloadResolver, createApiCallReducer } } = ram;
 

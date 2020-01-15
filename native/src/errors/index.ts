@@ -4,7 +4,7 @@ import middleware from "./middleware";
 import { reducer, reportedErrors } from "./store";
 import sagaErrorHandler from "./saga/error-handler";
 import handleSagaErrors from "./saga/decorator";
-import {store} from "@galette/core";
+import {store} from "@birdiecare/galette-core";
 
 const {actions} = store;
 

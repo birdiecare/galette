@@ -1,4 +1,4 @@
-import { store } from "@galette/core";
+import { store } from "@birdiecare/galette-core";
 const {actions} = store;
 
 const middleware = store => next => action => {

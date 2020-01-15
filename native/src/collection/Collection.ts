@@ -1,5 +1,5 @@
 import ListView from "deprecated-react-native-listview";
-import CoreCollection from "@galette/core/dist/store/Collection";
+import CoreCollection from "@birdiecare/galette-core/dist/store/Collection";
 
 export default class Collection extends CoreCollection
 {

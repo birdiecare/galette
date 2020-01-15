@@ -11,7 +11,7 @@ payload resolvers.
 
 ```javascript
 
-import { hydra } from "@galette/core";
+import { hydra } from "@birdiecare/galette-core";
 const { reduceListAndItems, reduceItems, reduceList } = hydra;
 
 ```

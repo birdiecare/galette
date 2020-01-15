@@ -1,6 +1,6 @@
 import { put } from 'redux-saga/effects'
 import { Action } from "redux";
-import {store, ReportActionOptions} from "@galette/core";
+import {store, ReportActionOptions} from "@birdiecare/galette-core";
 
 const {actions: {reportError}} = store;
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { View, Text, TouchableHighlight, StyleSheet} from "react-native";
 import { connect } from "react-redux";
-import {store, ReportedError} from "@galette/core";
+import {store, ReportedError} from "@birdiecare/galette-core";
 
 import RetryButton from "./RetryButton";
 

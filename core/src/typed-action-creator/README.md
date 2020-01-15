@@ -9,7 +9,7 @@ factory will allow you to refer to the type from the action creator directly.
    ```javascript
    // actions.js
 
-   import { typedActionCreatorFactory } from '@galette/core';
+   import { typedActionCreatorFactory } from '@birdiecare/galette-core';
 
    export const loadUser = typedActionCreatorFactory('LOAD_USER', username => ({ username }));
    ```

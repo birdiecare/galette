@@ -24,7 +24,7 @@ Let's use a list of users as our example.
 ```javascript
 // reducer.js
 
-import { store } from "@galette/core";
+import { store } from "@birdiecare/galette-core";
 const { reducers: { reduceListAndItems }} = store;
 
 export default const reducer = (state, action) => {
@@ -49,7 +49,7 @@ export default const reducer = (state, action) => {
 ```javascript
 // component.js
 
-import { store } from "@galette/core";
+import { store } from "@birdiecare/galette-core";
 const { selectors: { collectionWithItems }} = store;
 
 class UserList extends Component
@@ -74,7 +74,7 @@ the user item.
 ```javascript
 // reducers.js
 
-import { store } from "@galette/core";
+import { store } from "@birdiecare/galette-core";
 const { reducers: { reduceList, reduceItems }, functions: { updateItem }} = store;
 
 const travelIdentifierResolver = item => item.uuid;
@@ -107,7 +107,7 @@ You can now use the selector to get the travels of a given user in your componen
 ```javascript
 // component.js
 
-import { store } from "@galette/core";
+import { store } from "@birdiecare/galette-core";
 const { selectors: { collectionWithItems }} = store;
 
 class UserTravelList extends Component
@@ -156,7 +156,7 @@ reduceListAndItems(state, action, {
 Partially update an item in a list or object.
 
 ```
-import { store } from "@galette/core"
+import { store } from "@birdiecare/galette-core"
 const { functions: { updateItem } } = store;
 
 expect(

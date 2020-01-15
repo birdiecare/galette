@@ -1,5 +1,5 @@
 {
-  "name": "@galette/core",
+  "name": "@birdiecare/galette-core",
   "version": "0.0.11",
   "scripts": {
     "build": "npm run build-ts",

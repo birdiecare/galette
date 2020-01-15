@@ -2,7 +2,7 @@
 
 ## Working on the library
 
-The best option is to install Galette on your project(s) and symlink the project's `node_modules/@galette/[package]` to
+The best option is to install Galette on your project(s) and symlink the project's `node_modules/@birdiecare/galette-[package]` to
 a local clone of the Galette Git repository.
 
 1. Clone Galette.
@@ -12,7 +12,7 @@ a local clone of the Galette Git repository.
 
 2. Go on your project's directory. (We assume Galette is already a dependency)
    ```
-   cd node_modules/@galette
+   cd node_modules/@birdiecare/galette
    
    rm -rf core && ln -s /path/to/galette/git/core core
    ```

@@ -1,5 +1,5 @@
 {
-  "name": "@galette/native",
+  "name": "@birdiecare/galette-native",
   "version": "0.0.12",
   "scripts": {
     "release": "npm run build && npm publish",
@@ -8,7 +8,7 @@
     "build-ts": "tsc"
   },
   "dependencies": {
-    "@galette/core": "0.0.11",
+    "@birdiecare/galette-core": "0.0.11",
     "deprecated-react-native-listview": "0.0.6",
     "react-clone-referenced-element": "^1.1.0",
     "react-native-elements": "^0.19.1",

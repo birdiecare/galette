@@ -13,7 +13,7 @@ Once you've [set it up](#setup), you can use the wrapper component to display
 a nice error message to your users:
 
 ```javascript
-import { errors } from '@galette/native'
+import { errors } from '@birdiecare/galette-native'
 const { components: { ErrorWrapper }} = errors;
 
 // app.js
@@ -34,7 +34,7 @@ the `reportError` action creator.
 
 ```javascript
 // YourComponent.js
-import { errors } from '@galette/native'
+import { errors } from '@birdiecare/galette-native'
 const { actions: { reportError }} = errors;
 
 class YourComponent extends React.Component
@@ -54,7 +54,7 @@ export default connect(undefined, dispatch => bindActionCreators({
 ### reducer
 
 ```javascript
-import { errors } from '@galette/native'
+import { errors } from '@birdiecare/galette-native'
 
 // Add the `errors.reducer` reducer to your store...
 const reducer = (state, action) => {
@@ -80,7 +80,7 @@ that will report the error for you.
 
 ```javascript
 import createSagaMiddleware from 'redux-saga'
-import { errors } from '@galette/native'
+import { errors } from '@birdiecare/galette-native'
 const { sagaErrorHandler } = errors;
 
 // Create your saga middleware with the `onError` handler
@@ -106,7 +106,7 @@ The basic usage is simply to wrap your generators with the `handleSagaErrors` me
 
 ```javascript
 // sagas.js
-import { errors } from '@galette/native'
+import { errors } from '@birdiecare/galette-native'
 const { handleSagaErrors } = errors;
 
 const mySaga = handleSagaErrors(function*() {
