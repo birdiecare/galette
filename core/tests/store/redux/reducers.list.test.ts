@@ -179,6 +179,54 @@ describe("Reduce list of items", () => {
     });
   });
 
+  it("overrides the 1st page", () => {
+    const options = {
+      itemIdentifierResolver: (item: any) => item.id,
+      actionPrefix: "MY_ACTION",
+      listKeyInState: "list",
+      items: action => action.payload
+    };
+
+    let state = {};
+    let state = reduceList(
+      state,
+      {
+        type: "MY_ACTION_SENT"
+      },
+      options
+    );
+
+    let state = reduceList(
+      state,
+      {
+        type: "MY_ACTION_RECEIVED",
+        payload: [{ id: "1234" }],
+        meta: {
+          page: 1
+        }
+      },
+      options
+    );
+
+    let state = reduceList(
+      state,
+      {
+        type: "MY_ACTION_RECEIVED",
+        payload: [{ id: "5678" }],
+        meta: {
+          page: 1
+        }
+      },
+      options
+    );
+
+    expect(state).toMatchObject({
+      list: expect.objectContaining({
+        identifiers: ["5678"]
+      })
+    });
+  });
+
   it("supports to specify each action", () => {
     let state = {};
     const reducerOptions = {
