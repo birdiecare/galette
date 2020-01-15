@@ -131,6 +131,7 @@ export const reduceList = (
     // Ignore if current page was already loaded
     if (
       action.meta &&
+      action.meta.page > 1 &&
       state[options.listKeyInState].up_to_page == action.meta.page
     ) {
       return state;
