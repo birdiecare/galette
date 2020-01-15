@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deploy-core:
+  deploy-core-and-native:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -16,7 +16,10 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: Build and release
+      - name: Install common dependencies
+        run: yarn install
+
+      - name: Build and deploy core
         run: |
           cd core
           yarn install
@@ -25,17 +28,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-native:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-
-      - name: Build and release
+      - name: Build and deploy native
         run: |
           cd native
           yarn install
