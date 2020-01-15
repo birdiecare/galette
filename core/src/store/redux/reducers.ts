@@ -128,21 +128,21 @@ export const reduceList = (
 
     const loadedIdentifiers = items.map(options.itemIdentifierResolver);
 
-    // Ignore if current page was already loaded
-    if (
-      action.meta &&
-      action.meta.page > 1 &&
-      state[options.listKeyInState].up_to_page == action.meta.page
-    ) {
-      return state;
-    }
+    let identifiers = loadedIdentifiers;
 
-    const identifiers =
-      action.meta && state[options.listKeyInState].up_to_page < action.meta.page
-        ? // Adds
-          state[options.listKeyInState].identifiers.concat(loadedIdentifiers)
-        : // Replaces
-          loadedIdentifiers;
+    // If there is a page...
+    if (action.meta && action.meta.page && action.meta.page > 1) {
+      const currentPage = state[options.listKeyInState].up_to_page;
+      const currentIdentifiers = state[options.listKeyInState].identifiers;
+
+      // Same page, we ignore.
+      if (currentPage == action.meta.page) {
+        identifiers = currentIdentifiers;
+      } else if (currentPage < action.meta.page) {
+        // And the page is above the current page
+        identifiers = currentIdentifiers.concat(loadedIdentifiers);
+      }
+    }
 
     return updateItem(state, options.listKeyInState, {
       identifiers,
