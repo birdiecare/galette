@@ -24,11 +24,7 @@ exports[`it displays a loading indicator and dispatches the action if entity was
 `;
 
 exports[`it renders the component with the right property 1`] = `
-<Text
-  accessible={true}
-  allowFontScaling={true}
-  ellipsizeMode="tail"
->
+<Text>
   Samuel Roze
 </Text>
 `;

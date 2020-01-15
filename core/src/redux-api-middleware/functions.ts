@@ -5,7 +5,7 @@ try {
   CALL_API = 'MODULE_NOT_INSTALLED';
 }
 
-import {Action} from "../store/redux/reducers";
+import {Action} from "redux";
 import { createMappedReducer } from "../store/redux/functions";
 
 // BC-layer: start

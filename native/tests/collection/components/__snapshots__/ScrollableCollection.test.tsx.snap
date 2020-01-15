@@ -29,22 +29,55 @@ exports[`it displays only one loading indicator on the first page 1`] = `
   <RCTRefreshControl />
   <View>
     <RCTScrollView
+      DEPRECATED_sendUpdatedChildFrames={true}
       dataSource={
         ListViewDataSource {
-          "items": 1,
+          "_cachedRowCount": 1,
+          "_dataBlob": Object {
+            "s1": Array [
+              Object {
+                "foo": "bar",
+              },
+            ],
+          },
+          "_dirtyRows": Array [
+            Array [
+              true,
+            ],
+          ],
+          "_dirtySections": Array [
+            true,
+          ],
+          "_getRowData": [Function],
+          "_getSectionHeaderData": [Function],
+          "_rowHasChanged": [Function],
+          "_sectionHeaderHasChanged": [Function],
+          "rowIdentities": Array [
+            Array [
+              "0",
+            ],
+          ],
+          "sectionIdentities": Array [
+            "s1",
+          ],
         }
       }
       enableEmptySections={true}
+      initialListSize={10}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={1000}
+      onLayout={[Function]}
+      onScroll={[Function]}
+      pageSize={1}
+      removeClippedSubviews={true}
       renderRow={[Function]}
-      renderScrollComponent={[Function]}
-      style={undefined}
+      scrollEventThrottle={50}
+      scrollRenderAheadDistance={1000}
+      stickyHeaderIndices={Array []}
+      stickySectionHeadersEnabled={true}
     >
       <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
+        <Text>
           Row
         </Text>
       </View>
@@ -82,29 +115,63 @@ exports[`it displays the bottom loading indicator when more than one page has be
   <RCTRefreshControl />
   <View>
     <RCTScrollView
+      DEPRECATED_sendUpdatedChildFrames={true}
       dataSource={
         ListViewDataSource {
-          "items": 2,
+          "_cachedRowCount": 2,
+          "_dataBlob": Object {
+            "s1": Array [
+              Object {
+                "foo": "bar",
+              },
+              Object {
+                "foo": "baz",
+              },
+            ],
+          },
+          "_dirtyRows": Array [
+            Array [
+              true,
+              true,
+            ],
+          ],
+          "_dirtySections": Array [
+            true,
+          ],
+          "_getRowData": [Function],
+          "_getSectionHeaderData": [Function],
+          "_rowHasChanged": [Function],
+          "_sectionHeaderHasChanged": [Function],
+          "rowIdentities": Array [
+            Array [
+              "0",
+              "1",
+            ],
+          ],
+          "sectionIdentities": Array [
+            "s1",
+          ],
         }
       }
       enableEmptySections={true}
+      initialListSize={10}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={1000}
+      onLayout={[Function]}
+      onScroll={[Function]}
+      pageSize={1}
+      removeClippedSubviews={true}
       renderRow={[Function]}
-      renderScrollComponent={[Function]}
-      style={undefined}
+      scrollEventThrottle={50}
+      scrollRenderAheadDistance={1000}
+      stickyHeaderIndices={Array []}
+      stickySectionHeadersEnabled={true}
     >
       <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
+        <Text>
           Row
         </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
+        <Text>
           Row
         </Text>
       </View>

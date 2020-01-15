@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import { View, Text, TouchableHighlight, StyleSheet} from "react-native";
-import { Icon } from 'react-native-elements';
 import { connect } from "react-redux";
+import {store, ReportedError} from "@galette/core";
 
-import { dismissError } from "../actions";
-import { ReportedError } from "../types";
 import RetryButton from "./RetryButton";
+
+const {actions: {dismissError}} = store;
 
 type Props = {
   reportedError: ReportedError;

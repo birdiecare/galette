@@ -1,7 +1,8 @@
 import { put } from 'redux-saga/effects'
+import { Action } from "redux";
+import {store, ReportActionOptions} from "@galette/core";
 
-import { reportError } from "../actions";
-import { Action, ReportActionOptions } from "../types";
+const {actions: {reportError}} = store;
 
 export default function handleSagaErrors(generator, options?: ReportActionOptions) {
   return function*(action?: Action, ...rest: any[]) {

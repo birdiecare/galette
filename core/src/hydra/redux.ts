@@ -2,9 +2,10 @@ import {
   reduceList as originalReduceList,
   reduceItems as originalReduceItems,
   reduceListAndItems as originalReduceListAndItems,
-  Action,
   ReduceListOptions, ActionLifecycleOptions,
 } from "../store/redux/reducers";
+
+import {Action} from "redux";
 
 export type HydraOptions = ActionLifecycleOptions & {
   listKeyInState: string;

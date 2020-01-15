@@ -1,4 +1,4 @@
-import {Action} from "./reducers";
+import {AnyAction} from "redux";
 
 export const updateItem = (state : any = {}, itemIdentifier : string, itemState : any) : any => {
   return {
@@ -10,7 +10,6 @@ export const updateItem = (state : any = {}, itemIdentifier : string, itemState 
   }
 };
 
-type AnyAction = Action & any;
 type AnyReducer<StateType> = (state: StateType, action: AnyAction) => StateType;
 type ReducerMapping<StateType> = {
   [type: string]: AnyReducer<StateType>;

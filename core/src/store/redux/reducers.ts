@@ -1,11 +1,7 @@
 import { updateItem } from "./functions";
+import {AnyAction} from "redux";
 
-export type Action = {
-  type: string;
-
-  [x: string]: any;
-}
-export type ItemsResolver = (action: Action) => any[];
+export type ItemsResolver = (action: AnyAction) => any[];
 export type ItemsOption = any[] | ItemsResolver;
 export type ReduceItemsOptions = {
   items: ItemsOption;
@@ -27,8 +23,8 @@ export type ActionLifecycleOptions = {
 export type ReduceListOptions = ReduceItemsOptions & ActionLifecycleOptions & {
   listKeyInState: string;
 
-  errorMessageResolver?: (action: Action) => string;
-  totalItems?: (action: Action) => number;
+  errorMessageResolver?: (action: AnyAction) => string;
+  totalItems?: (action: AnyAction) => number;
 };
 
 export type ReducedList = {
@@ -52,7 +48,7 @@ const resolveActionsToHandle = (options: ReduceListOptions) => {
   return options.actions;
 };
 
-export const reduceListAndItems = (state = {}, action : Action, options : ReduceListOptions) => {
+export const reduceListAndItems = (state = {}, action : AnyAction, options : ReduceListOptions) => {
   const actions = resolveActionsToHandle(options);
   const actionTypes = Object.keys(actions).map((key: 'starting' | 'failed' | 'succeed') => actions[key]);
   if (actionTypes.indexOf(action.type) === -1) {
@@ -70,7 +66,7 @@ export const reduceListAndItems = (state = {}, action : Action, options : Reduce
   );
 };
 
-function itemsFromAction(action: Action, options: ReduceItemsOptions) {
+function itemsFromAction(action: AnyAction, options: ReduceItemsOptions) {
   let items = 'function' === typeof options.items
     ? options.items(action)
     : options.items;
@@ -82,13 +78,13 @@ function itemsFromAction(action: Action, options: ReduceItemsOptions) {
   return items;
 }
 
-const defaultErrorMessageResolver = (action: Action) => {
+const defaultErrorMessageResolver = (action: AnyAction) => {
   const messageSource = action.error || action.payload || {};
 
   return messageSource.message || messageSource.error || 'Something went wrong.';
 };
 
-export const reduceItems = (state = {}, action : Action, options : ReduceItemsOptions) => {
+export const reduceItems = (state = {}, action : AnyAction, options : ReduceItemsOptions) => {
   let items = itemsFromAction(action, options);
 
   for (let i = 0; i < items.length; i++) {
@@ -100,7 +96,7 @@ export const reduceItems = (state = {}, action : Action, options : ReduceItemsOp
   return state;
 };
 
-export const reduceList = (state : any = {}, action : Action, options : ReduceListOptions) : ReducedList => {
+export const reduceList = (state : any = {}, action : AnyAction, options : ReduceListOptions) : ReducedList => {
   const actions = resolveActionsToHandle(options);
 
   // If the list does not exists.
