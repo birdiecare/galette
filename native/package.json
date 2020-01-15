@@ -8,7 +8,7 @@
     "build-ts": "tsc"
   },
   "dependencies": {
-    "@birdiecare/galette-core": "1.0.0",
+    "@birdiecare/galette-core": "^1.0.0",
     "deprecated-react-native-listview": "0.0.6",
     "react-clone-referenced-element": "^1.1.0",
     "react-native-elements": "^0.19.1",
