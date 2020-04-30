@@ -1,6 +1,6 @@
 {
   "name": "@birdiecare/galette-native",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "release": "npm run build && npm publish",
     "test": "jest",
