@@ -1,31 +1,32 @@
 import { updateItem } from "./functions";
-import {AnyAction} from "redux";
+import { AnyAction } from "redux";
 
 export type ItemsResolver = (action: AnyAction) => any[];
 export type ItemsOption = any[] | ItemsResolver;
 export type ReduceItemsOptions = {
   items: ItemsOption;
   itemIdentifierResolver: (item: object) => string;
-  itemTransformer?: (item : object) => object;
+  itemTransformer?: (item: object) => object;
 };
 
 export type ActionLifecycle = {
   starting: string;
   failed: string;
   succeed: string;
-}
+};
 
 export type ActionLifecycleOptions = {
   actionPrefix?: string;
   actions: ActionLifecycle;
-}
-
-export type ReduceListOptions = ReduceItemsOptions & ActionLifecycleOptions & {
-  listKeyInState: string;
-
-  errorMessageResolver?: (action: AnyAction) => string;
-  totalItems?: (action: AnyAction) => number;
 };
+
+export type ReduceListOptions = ReduceItemsOptions &
+  ActionLifecycleOptions & {
+    listKeyInState: string;
+
+    errorMessageResolver?: (action: AnyAction) => string;
+    totalItems?: (action: AnyAction) => number;
+  };
 
 export type ReducedList = {
   identifiers: string[];
@@ -39,37 +40,34 @@ export type ReducedList = {
 const resolveActionsToHandle = (options: ReduceListOptions) => {
   if (options.actionPrefix) {
     options.actions = {
-      starting: options.actionPrefix+'_SENT',
-      failed: options.actionPrefix+'_FAILED',
-      succeed: options.actionPrefix+'_RECEIVED',
-    }
+      starting: options.actionPrefix + "_SENT",
+      failed: options.actionPrefix + "_FAILED",
+      succeed: options.actionPrefix + "_RECEIVED"
+    };
   }
 
   return options.actions;
 };
 
-export const reduceListAndItems = (state = {}, action : AnyAction, options : ReduceListOptions) => {
+export const reduceListAndItems = (
+  state = {},
+  action: AnyAction,
+  options: ReduceListOptions
+) => {
   const actions = resolveActionsToHandle(options);
-  const actionTypes = Object.keys(actions).map((key: 'starting' | 'failed' | 'succeed') => actions[key]);
+  const actionTypes = Object.keys(actions).map(
+    (key: "starting" | "failed" | "succeed") => actions[key]
+  );
   if (actionTypes.indexOf(action.type) === -1) {
     return state;
   }
 
-  return reduceList(
-    reduceItems(
-      state,
-      action,
-      options
-    ),
-    action,
-    options
-  );
+  return reduceList(reduceItems(state, action, options), action, options);
 };
 
 function itemsFromAction(action: AnyAction, options: ReduceItemsOptions) {
-  let items = 'function' === typeof options.items
-    ? options.items(action)
-    : options.items;
+  let items =
+    "function" === typeof options.items ? options.items(action) : options.items;
 
   if (options.itemTransformer) {
     items = items.map(options.itemTransformer);
@@ -81,10 +79,16 @@ function itemsFromAction(action: AnyAction, options: ReduceItemsOptions) {
 const defaultErrorMessageResolver = (action: AnyAction) => {
   const messageSource = action.error || action.payload || {};
 
-  return messageSource.message || messageSource.error || 'Something went wrong.';
+  return (
+    messageSource.message || messageSource.error || "Something went wrong."
+  );
 };
 
-export const reduceItems = (state = {}, action : AnyAction, options : ReduceItemsOptions) => {
+export const reduceItems = (
+  state = {},
+  action: AnyAction,
+  options: ReduceItemsOptions
+) => {
   let items = itemsFromAction(action, options);
 
   for (let i = 0; i < items.length; i++) {
@@ -96,7 +100,11 @@ export const reduceItems = (state = {}, action : AnyAction, options : ReduceItem
   return state;
 };
 
-export const reduceList = (state : any = {}, action : AnyAction, options : ReduceListOptions) : ReducedList => {
+export const reduceList = (
+  state: any = {},
+  action: AnyAction,
+  options: ReduceListOptions
+): ReducedList => {
   const actions = resolveActionsToHandle(options);
 
   // If the list does not exists.
@@ -107,37 +115,50 @@ export const reduceList = (state : any = {}, action : AnyAction, options : Reduc
   if (action.type === actions.starting) {
     return updateItem(state, options.listKeyInState, {
       loading: true,
-      error: null,
+      error: null
     });
   }
 
   if (action.type === actions.succeed) {
     const items = itemsFromAction(action, options);
-    const totalItems = 'function' === typeof options.totalItems
-      ? options.totalItems(action)
-      : undefined;
+    const totalItems =
+      "function" === typeof options.totalItems
+        ? options.totalItems(action)
+        : undefined;
 
     const loadedIdentifiers = items.map(options.itemIdentifierResolver);
-    const identifiers = action.meta && state[options.listKeyInState].up_to_page < action.meta.page
-      // Adds
-      ? state[options.listKeyInState].identifiers.concat(loadedIdentifiers)
 
-      // Replaces
-      : loadedIdentifiers;
+    let identifiers = loadedIdentifiers;
+
+    // If there is a page...
+    if (action.meta && action.meta.page && action.meta.page > 1) {
+      const currentPage = state[options.listKeyInState].up_to_page;
+      const currentIdentifiers = state[options.listKeyInState].identifiers;
+
+      // Same page, we ignore.
+      if (currentPage == action.meta.page) {
+        identifiers = currentIdentifiers;
+      } else if (currentPage < action.meta.page) {
+        // And the page is above the current page
+        identifiers = currentIdentifiers.concat(loadedIdentifiers);
+      }
+    }
 
     return updateItem(state, options.listKeyInState, {
       identifiers,
       up_to_page: action.meta && action.meta.page,
       loading: false,
-      total_items: totalItems,
+      total_items: totalItems
     });
   }
 
   if (action.type === actions.failed) {
-    const errorResolver = options.errorMessageResolver ? options.errorMessageResolver : defaultErrorMessageResolver;
+    const errorResolver = options.errorMessageResolver
+      ? options.errorMessageResolver
+      : defaultErrorMessageResolver;
     return updateItem(state, options.listKeyInState, {
       loading: false,
-      error: errorResolver(action),
+      error: errorResolver(action)
     });
   }
 
