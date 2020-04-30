@@ -2,30 +2,32 @@ name: CI
 
 on: [push]
 
-jobs: 
-  build:
+jobs:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v1
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+          registry-url: https://npm.pkg.github.com/
+          scope: "@birdiecare"
 
-      - name: Install dependencies
+      - name: Install common dependencies
         run: yarn install
 
       - name: Run core tests & build for native tests
-        run: | 
+        run: |
           cd core 
           yarn install
           npm test
           npm run build
 
       - name: Native Tests
-        run: | 
+        run: |
           cd native
           yarn install
           npm test
-          cd ..
