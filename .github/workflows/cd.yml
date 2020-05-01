@@ -8,29 +8,51 @@ on:
 jobs:
   deploy-core-and-native:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Check the package.json of /core to see if it has changed
+        uses: EndBug/version-check@v1.3.0
+        with:
+          file-name: core/package.json
+          diff-search: true
+        id: core-version-change
+
+      - name: Check the package.json of /native to see if it has changed
+        uses: EndBug/version-check@v1.3.0
+        with:
+          file-name: native/package.json
+          diff-search: true
+        id: native-version-change
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
           registry-url: https://npm.pkg.github.com/
-          scope: '@birdiecare'
+          scope: "@birdiecare"
 
       - name: Install common dependencies
         run: yarn install
 
-      - name: Build and deploy core
+      - name: Build core
         run: |
           cd core
           yarn install
           npm run build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy core
+        if: steps.check.outputs.core-version-change.changed == 'true'
+        run: |
+          cd core
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build and deploy native
+        if: steps.check.outputs.native-version-change.changed == 'true'
         run: |
           cd native
           yarn install
