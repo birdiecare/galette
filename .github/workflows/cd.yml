@@ -45,14 +45,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy core
-        if: steps.check.outputs.core-version-change.changed == 'true'
+        if: steps.core-version-change.outputs.changed == 'true'
         run: |
           cd core
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and deploy native
-        if: steps.check.outputs.native-version-change.changed == 'true'
+        if: steps.native-version-change.outputs.changed == 'true'
         run: |
           cd native
           yarn install
