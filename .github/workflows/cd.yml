@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - ci-test
 
 jobs:
   deploy-core-and-native:
@@ -46,16 +45,18 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy core
+        if: steps.check.outputs.core-version-change.changed == 'true'
         run: |
           cd core
-          # npm publish
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and deploy native
+        if: steps.check.outputs.native-version-change.changed == 'true'
         run: |
           cd native
           yarn install
           npm run build
-          # npm publish
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
