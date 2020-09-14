@@ -1,9 +1,8 @@
 import React, { Component, ReactNode } from 'react'
-import { StyleProp, Text, ViewStyle } from 'react-native'
+import { StyleProp, Text, ViewStyle, FlatList } from 'react-native'
 
 import Collection from '../Collection'
 import { FormLabel } from 'react-native-elements'
-import ListView from 'deprecated-react-native-listview'
 import ZeroStatePlaceholder from '../../empty-state/ZeroStatePlaceholder'
 
 export type Props = {
@@ -31,20 +30,19 @@ export default class CollectionComponent extends Component<Props, {}> {
           <Text>Something went wrong, sorry for the inconvenience.</Text>
         )}
 
-        {dataSource.getRowCount() === 0 && !collection.isLoading() && (
+        {dataSource.length === 0 && !collection.isLoading() && (
           this.props.zeroStatePlaceHolder ? this.props.zeroStatePlaceHolder : (
             <ZeroStatePlaceholder message={this.props.zeroStatePlaceHolderMessage || "List is empty."}/>
           )
         )}
 
-        <ListView
+        <FlatList
           testID={this.props.testID}
-          dataSource={dataSource}
-          enableEmptySections={true}
+          data={dataSource}
           style={this.props.listViewStyle}
-          renderRow={(item, id) => {
-            return renderRow(item, id)
-          }}/>
+          renderItem={({ item, index}) => renderRow(item, index)}
+          keyExtractor={(_, index ) => index.toString()}
+        />
       </React.Fragment>
     )
   }
