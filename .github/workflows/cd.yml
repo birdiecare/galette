@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Check the package.json of /core to see if it has changed
         uses: EndBug/version-check@v1.3.0
@@ -32,31 +32,43 @@ jobs:
         with:
           node-version: 12.x
           registry-url: https://npm.pkg.github.com/
-          scope: "@birdiecare"
+          scope: '@birdiecare'
 
       - name: Install common dependencies
-        run: yarn install
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=$NPM_REGISTRY_TOKEN" >> .npmrc
+        env:
+          NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+          NODE_ENV: development
 
       - name: Build core
+        working-directory: core
         run: |
-          cd core
-          yarn install
+          echo "//npm.pkg.github.com/:_authToken=$NPM_REGISTRY_TOKEN" >> .npmrc
+          npm ci
           npm run build
         env:
+          NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+          NODE_ENV: development
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy core
         if: steps.core-version-change.outputs.changed == 'true'
+        working-directory: core
         run: |
-          cd core
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and deploy native
         if: steps.native-version-change.outputs.changed == 'true'
+        working-directory: native
         run: |
-          cd native
-          yarn install
+          echo "//npm.pkg.github.com/:_authToken=$NPM_REGISTRY_TOKEN" >> .npmrc
+          npm ci
           npm run build
           npm publish
         env:
+          NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+          NODE_ENV: development
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

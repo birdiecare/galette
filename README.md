@@ -14,7 +14,7 @@ The core contains modules that are generic. They can be used both for React and 
 ### Installation
 
 ```
-yarn add @birdiecare/galette-core
+npm add @birdiecare/galette-core
 ```
 
 ### Modules
@@ -36,7 +36,7 @@ yarn add @birdiecare/galette-core
 ### Installation
 
 ```
-yarn add @birdiecare/galette-native
+npm add @birdiecare/galette-native
 ```
 
 ### Modules
@@ -59,7 +59,7 @@ yarn add @birdiecare/galette-native
 ### Installation
 
 ```
-yarn add @birdiecare/galette-web
+npm add @birdiecare/galette-web
 ```
 
 ### Modules

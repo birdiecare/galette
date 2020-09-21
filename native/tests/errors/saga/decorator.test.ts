@@ -26,6 +26,7 @@ describe('Saga decorator', () => {
       getState: () => ({}),
     }, handleSagaErrors(function*(foo, bar) {
       yield put({ type: 'YAY', foo, bar })
+    // @ts-ignore
     }), 'one', 'two');
 
     expect(dispatched).toEqual([

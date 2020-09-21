@@ -7,27 +7,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
           registry-url: https://npm.pkg.github.com/
-          scope: "@birdiecare"
+          scope: '@birdiecare'
 
       - name: Install common dependencies
-        run: yarn install
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=$NPM_REGISTRY_TOKEN" >> .npmrc
+        env:
+          NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+          NODE_ENV: development
 
       - name: Run core tests & build for native tests
+        working-directory: core
         run: |
-          cd core 
-          yarn install
+          echo "//npm.pkg.github.com/:_authToken=$NPM_REGISTRY_TOKEN" >> .npmrc
+          npm ci
           npm test
           npm run build
+        env:
+          NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+          NODE_ENV: development
 
       - name: Native Tests
+        working-directory: native
         run: |
-          cd native
-          yarn install
+          echo "//npm.pkg.github.com/:_authToken=$NPM_REGISTRY_TOKEN" >> .npmrc
+          npm ci
           npm test
+        env:
+          NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+          NODE_ENV: development
