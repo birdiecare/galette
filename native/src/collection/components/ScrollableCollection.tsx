@@ -20,7 +20,7 @@ export default class ScrollableCollection extends Component<Props, {}> {
     header: null
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onRefresh();
   }
 
@@ -50,7 +50,6 @@ export default class ScrollableCollection extends Component<Props, {}> {
           }}
         >
           {this.props.header}
-
           <CollectionComponent {...this.props} />
         </InfiniteScrollView>
       </React.Fragment>

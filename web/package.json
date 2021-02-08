@@ -1,7 +1,7 @@
 {
   "name": "@birdiecare/galette-web",
   "version": "0.0.1",
-  "require": {
+  "dependencies": {
     "react-native-elements": "^0.18.4"
   }
 }

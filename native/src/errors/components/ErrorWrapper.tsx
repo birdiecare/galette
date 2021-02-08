@@ -32,7 +32,7 @@ class ErrorWrapper extends Component<Props, {}>
   }
 
   render() {
-    const errorsContainerStyles = [
+    const errorsContainerStyles: any[] = [
       styles.forwardContainer,
     ];
 

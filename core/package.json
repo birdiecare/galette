@@ -1,16 +1,24 @@
 {
   "name": "@birdiecare/galette-core",
   "version": "1.0.2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/birdiecare/galette",
+    "directory": "core"
+  },
   "scripts": {
     "build": "npm run build-ts",
     "test": "jest --verbose",
     "build-ts": "tsc",
     "release": "npm run build && npm publish"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/birdiecare/galette",
-    "directory": "core"
+  "dependencies": {
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
@@ -23,14 +31,6 @@
     "ts-jest": "^22.4.6",
     "ts-node": "^6.1.1",
     "typescript": "^3.2.1"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "redux": "^4.0.5"
   },
   "husky": {
     "hooks": {

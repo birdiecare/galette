@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "lib": ["es7"],
     "target": "es5",
