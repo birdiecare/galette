@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from "react";
-import { RefreshControl, ScrollView, StyleProp, ViewStyle } from "react-native";
+import { RefreshControl, StyleProp, ViewStyle } from "react-native";
 import CollectionComponent, {
   Props as CollectionComponentProps
 } from "./CollectionComponent";
@@ -9,6 +9,7 @@ import Collection from "../Collection";
 type Props = CollectionComponentProps & {
   collection: Collection;
   onRefresh: (page?: number) => void;
+  hideRefreshAnimation?: boolean;
   header?: ReactNode;
   numberOfItemsForFullPage?: StyleProp<ViewStyle>;
   style?: any;
@@ -25,7 +26,7 @@ export default class ScrollableCollection extends Component<Props, {}> {
   }
 
   render() {
-    let { collection } = this.props;
+    let { collection, hideRefreshAnimation } = this.props;
 
     return (
       <React.Fragment>
@@ -34,7 +35,7 @@ export default class ScrollableCollection extends Component<Props, {}> {
           style={this.props.style || { flex: 1 }}
           refreshControl={
             <RefreshControl
-              refreshing={collection.isLoading()}
+              refreshing={!hideRefreshAnimation && collection.isLoading()}
               onRefresh={() => this.props.onRefresh(1)}
               title="Loading..."
               tintColor="#fff"
