@@ -1,6 +1,4 @@
 node_modules/
 dist/
 .jest/
-package-lock.json
-yarn.lock
 .idea
